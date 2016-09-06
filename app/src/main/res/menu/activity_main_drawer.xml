@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_pin_drop_24dp"
+            android:title="Pontos" />
+        <item
+            android:id="@+id/nav_sync"
+            android:icon="@drawable/ic_sync_24dp"
+            android:title="Sincronizar" />
+        <item
+            android:id="@+id/nav_checkin"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Checkin" />
+    </group>
+
+    <item android:title="Configurações">
+        <menu>
+            <item
+                android:id="@+id/nav_logoff"
+                android:icon="@drawable/ic_lock_open_24dp"
+                android:title="Sair" />
+        </menu>
+    </item>
+
+</menu>

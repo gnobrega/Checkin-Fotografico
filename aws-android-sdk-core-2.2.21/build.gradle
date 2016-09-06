@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('aws-android-sdk-core-2.2.21.jar'))
