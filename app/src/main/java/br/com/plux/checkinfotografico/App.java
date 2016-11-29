@@ -1,5 +1,7 @@
 package br.com.plux.checkinfotografico;
 
+import android.os.Environment;
+
 /**
  * Created by gustavonobrega on 01/06/2016.
  */
@@ -11,9 +13,8 @@ public class App {
 
     //AWS
     public static String AWS_S3_BUCKET_DEFAULT = "checkin-fotografico";
-    public static String AWS_ACCESS_KEY_ID = "AKIAJBAVLURHNNMEZMUQ";
-    public static String AWS_SECRET_KEY = "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";
+    public static final String COGNITO_POOL_ID = "us-east-1:3f38eec3-a157-4280-b529-8cefa0c565fa";
 
     //Path photos
-    public static String PATH_PHOTOS = "/storage/sdcard0/Checkin";
+    public static String PATH_PHOTOS = Environment.getExternalStorageDirectory() + "/Checkin";
 }

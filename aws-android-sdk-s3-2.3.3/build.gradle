@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('aws-android-sdk-s3-2.3.3.jar'))

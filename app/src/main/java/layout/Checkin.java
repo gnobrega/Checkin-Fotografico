@@ -1,16 +1,19 @@
 package layout;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -311,9 +314,19 @@ public class Checkin extends Fragment {
     Uri mImageUri;
     String urlFile;
     public void openCam() {
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra("android.intent.extra.quickCapture", true);
         String pathPhotos = App.PATH_PHOTOS;
+
+        //Verifica se o aparelho possui a permissão de escrita no sdcard
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Integer PERMISSIONS_REQUEST_WRITE = 1;
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE);
+        }
+
         File dir = new File(pathPhotos);
         if( !dir.exists() ) {
             dir.mkdir();
@@ -329,7 +342,23 @@ public class Checkin extends Fragment {
             e.printStackTrace();
         }
 
-        startActivityForResult(intent, 0);
+        //Verifica se o aparelho possui a permissão da câmera
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Toast toast = Toast.makeText(getContext(), "Permissão de acesso à câmera negada",Toast.LENGTH_SHORT);
+            toast.show();
+
+            Integer PERMISSIONS_REQUEST_CAMERA = 1;
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.CAMERA},
+                    PERMISSIONS_REQUEST_CAMERA);
+
+            startActivityForResult(intent, 0);
+        } else {
+            startActivityForResult(intent, 0);
+        }
+
+
     }
 
     /**

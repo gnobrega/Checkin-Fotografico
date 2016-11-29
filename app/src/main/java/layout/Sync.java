@@ -1,6 +1,7 @@
 package layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +23,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import br.com.plux.checkinfotografico.App;
 import br.com.plux.checkinfotografico.Connection;
@@ -39,6 +39,7 @@ public class Sync extends Fragment {
     LinearLayout syncContainer;
     int totalFotos = 0;
     int fotoAtual = 0;
+    private HashMap<Integer, HashMap> listImages = Checkin.listImages;
 
     public static Fragment newInstance(Context context) {
         Sync f = new Sync();
@@ -165,6 +166,7 @@ public class Sync extends Fragment {
     }
 
     public void syncPhotos() {
+        final Sync thisObj = this;
 
         //Status
         setStatus("Sincronizando as fotografias...");
@@ -185,7 +187,16 @@ public class Sync extends Fragment {
             @Override
             public void handleMessage(Message msg) {
                 if( msg.obj != null ) {
-                    sendProgress((int) msg.obj);
+                    Intent intent = (Intent)msg.obj;
+                    Long progress = intent.getLongExtra("progress", Long.valueOf(0));
+                    String imageKey = intent.getStringExtra("imageKey");
+
+                    if( imageKey != null) {
+                        thisObj.removerItem(imageKey);
+                    }
+
+                    sendProgress(progress);
+
                 }
             }
         };
@@ -202,9 +213,7 @@ public class Sync extends Fragment {
                 UserBean user = Util.getUserSession(getContext());
 
                 //Recupera as fotografias
-                HashMap<Integer, HashMap> listImages = Checkin.listImages;
                 S3Client s3 = new S3Client();
-                List<String> removeImages = new ArrayList<String>();
 
                 //Calcula o numero de fotos
                 for( Integer locationId : listImages.keySet() ) {
@@ -225,6 +234,7 @@ public class Sync extends Fragment {
                     //Percorre a lista fotografias
                     for( String imageKey : listImageItem.keySet() ) {
                         ImageItem imageItem = listImageItem.get(imageKey);
+
                         File file = new File(imageItem.getRealFile());
                         if( file.exists() && imageItem.getCampaignId() != null ) {
                             fotoAtual ++;
@@ -232,21 +242,17 @@ public class Sync extends Fragment {
                             String s3FileKey = "photos"  + "/campaign_" + imageItem.getCampaignId() + "/location_" + locationId + "/user_" + user.getId() + "_" + file.getName();
 
                             //Executa o upload
-                            Boolean success = s3.upload(file, s3FileKey, handlerProgress);
-                            if( success ) {
-                                //Registra os itens que serão removidos
-                                removeImages.add(imageKey);
-                            }
+                            s3.upload(file, s3FileKey, handlerProgress, thisObj.context, imageKey);
                         }
                     }
 
                     //Remove a lista de imagens sincronizadas
-                    for( String imageKey : removeImages ) {
+                    /*for( String imageKey : removeImages ) {
                         ImageItem imageItem = listImageItem.get(imageKey);
                         if( imageItem != null ) {
                             imageItem.remover(getActivity());
                         }
-                    }
+                    }*/
                 }
 
                 //Fim da sincronia
@@ -263,13 +269,37 @@ public class Sync extends Fragment {
         handler.sendMessage(message);
     }
 
-    void sendProgress(int val) {
+    void sendProgress(Long val) {
         if( Looper.myLooper() == Looper.getMainLooper() ) {
             ProgressBar bar = (ProgressBar) rootView.findViewById(R.id.syncProgress);
-            bar.setProgress(val);
+            bar.setProgress(val.intValue());
 
             if( totalFotos == fotoAtual && val == 100 ) {
                 setStatus("Sincronia finalizada");
+            }
+        }
+    }
+
+    public final void removerItem(String imageKey) {
+        for( Integer locationId : listImages.keySet() ) {
+            HashMap<String, ImageItem> listImageItem = listImages.get(locationId);
+
+            //Armazena os itens que serão removidos pois não é possível remover no meio da iteração da lista
+            ArrayList<String> imagesKeyRemove = new ArrayList<>();
+
+            //Percorre a lista fotografias buscando as que serão removidas
+            for (String key : listImageItem.keySet()) {
+                imagesKeyRemove.add(key);
+            }
+
+            //Executa a exclusão
+            for (String key : imagesKeyRemove) {
+                if( key.equals(imageKey) ) {
+                    ImageItem imageItem = listImageItem.get(imageKey);
+                    if (imageItem != null) {
+                        imageItem.remover(getActivity());
+                    }
+                }
             }
         }
     }

@@ -20,9 +20,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.io.File;
 
 import layout.Checkin;
 
@@ -42,6 +46,37 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
+
+
+
+
+
+
+
+
+        TransferUtility transferUtility;
+        transferUtility = S3Client.getTransferUtility(this);
+
+        String filePath = "/sdcard/teste.jpg";
+        File file = new File(filePath);
+        if( file.exists() ) {
+            TransferObserver observer = transferUtility.upload(App.AWS_S3_BUCKET_DEFAULT, "photos"+file.getName(),
+                    file);
+        }
+
+
+
+
+
+
+
+
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

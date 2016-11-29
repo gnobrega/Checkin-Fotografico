@@ -6,32 +6,21 @@ package br.com.plux.checkinfotografico;
  * and open the template in the editor.
  */
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.mobileconnectors.s3.transfermanager.TransferManager;
-import com.amazonaws.mobileconnectors.s3.transfermanager.Upload;
-import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.ListObjectsRequest;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -39,169 +28,73 @@ import java.util.logging.Logger;
  */
 public class S3Client {
 
-    public AmazonS3 conn;
-    AWSCredentials credentials;
-    ClientConfiguration clientConfiguration;
-    String bucket;
+    private static AmazonS3Client sS3Client;
+    private static CognitoCachingCredentialsProvider sCredProvider;
+    private static TransferUtility sTransferUtility;
+    private Handler handler;
 
-    public S3Client() {
-        credentials = new BasicAWSCredentials(App.AWS_ACCESS_KEY_ID, App.AWS_SECRET_KEY);
-        clientConfiguration = new ClientConfiguration();
-        clientConfiguration.setConnectionTimeout(0);
-        this.connect();
-    }
-
-    public void connect() {
-        conn = new AmazonS3Client(this.credentials, this.clientConfiguration);
-    }
-
-    public void synchronizeAsync(String bucket, String prefix) {
-        final S3Client s3Client = this;
-        this.bucket = bucket;
-        Runnable r = new Runnable() {
-            public void run() {
-
-            }
-        };
-
-        new Thread(r).start();
+    /**
+     * Gets an instance of CognitoCachingCredentialsProvider which is
+     * constructed using the given Context.
+     *
+     * @param context An Context instance.
+     * @return A default credential provider.
+     */
+    private static CognitoCachingCredentialsProvider getCredProvider(Context context) {
+        if (sCredProvider == null) {
+            sCredProvider = new CognitoCachingCredentialsProvider(
+                    context.getApplicationContext(),
+                    App.COGNITO_POOL_ID,
+                    Regions.US_EAST_1);
+        }
+        return sCredProvider;
     }
 
     /**
-     * Lista todos os arquivos
+     * Gets an instance of a S3 client which is constructed using the given
+     * Context.
      *
-     * @param bucket
-     * @param prefix
-     * @return
+     * @param context An Context instance.
+     * @return A default S3 client.
      */
-    public List<S3ObjectSummary> listFiles(String bucket, String prefix) {
-        ObjectListing listing = conn.listObjects(App.AWS_S3_BUCKET_DEFAULT, prefix);
-        List<S3ObjectSummary> summaries = listing.getObjectSummaries();
-        List<S3ObjectSummary> lstFiles = new ArrayList<S3ObjectSummary>();;
+    public static AmazonS3Client getS3Client(Context context) {
+        if (sS3Client == null) {
+            sS3Client = new AmazonS3Client(getCredProvider(context.getApplicationContext()));
+        }
+        return sS3Client;
+    }
 
-        for (S3ObjectSummary summarie : summaries) {
-            if (!summarie.getKey().endsWith("/")) {
-                lstFiles.add(summarie);
-            }
+    /**
+     * Gets an instance of the TransferUtility which is constructed using the
+     * given Context
+     *
+     * @param context
+     * @return a TransferUtility instance
+     */
+    public static TransferUtility getTransferUtility(Context context) {
+        if (sTransferUtility == null) {
+            sTransferUtility = new TransferUtility(getS3Client(context.getApplicationContext()),
+                    context.getApplicationContext());
         }
 
-        return lstFiles;
-    }
-
-    /**
-     * Lista todas as pastas
-     *
-     * @param bucket
-     * @param prefix
-     * @return
-     */
-    public List<S3ObjectSummary> listFolders(String bucket, String prefix) {
-        ObjectListing listing = conn.listObjects(App.AWS_S3_BUCKET_DEFAULT, prefix);
-        List<S3ObjectSummary> summaries = listing.getObjectSummaries();
-        List<S3ObjectSummary> lstFolders = new ArrayList<S3ObjectSummary>();;
-
-        for (S3ObjectSummary summarie : summaries) {
-            if (summarie.getKey().endsWith("/")) {
-                lstFolders.add(summarie);
-            }
-        }
-
-        return lstFolders;
-    }
-
-    /**
-     * Lista todos os objetos existentes no bucket
-     *
-     * @param bucket
-     * @param prefix
-     * @return
-     */
-    public List<S3ObjectSummary> listAll(String bucket, String prefix) {
-        ObjectListing objectListing = conn.listObjects(
-                new ListObjectsRequest().withPrefix(prefix).withBucketName(App.AWS_S3_BUCKET_DEFAULT));
-        List<S3ObjectSummary> listObj = objectListing.getObjectSummaries();
-
-        return listObj;
-    }
-
-    /**
-     * Lista todos os arquivos do servidor
-     */
-    public void listFilesServer() {
-
-    }
-
-    /**
-     * Realiza o download de um arquivo
-     *
-     * @param bucketName
-     * @param key
-     * @param fileLocal
-     * @return
-     */
-    public boolean download(String bucketName, String key, String fileLocal) {
-        this.connect();
-
-        //Cria o diretório
-        int pos = fileLocal.lastIndexOf("/");
-        String folder = fileLocal.substring(0, pos);
-        //mkdir(folder);
-
-        //Recupera o arquivo do S3
-        S3Object object = conn.getObject(new GetObjectRequest(App.AWS_S3_BUCKET_DEFAULT, key));
-
-        InputStream objectData = object.getObjectContent();
-        byte[] buffer = new byte[8 * 1024];
-
-        //Compara os dois arquivo
-        boolean isEquals = compare(object, new File(fileLocal));
-
-        //Executa o download se for diferente
-        if( !isEquals ) {
-
-            try {
-                OutputStream output = new FileOutputStream(fileLocal);
-                try {
-                    int bytesRead;
-
-                    //Recarrega os dados do arquivo
-                    object = conn.getObject(new GetObjectRequest(App.AWS_S3_BUCKET_DEFAULT, key));
-                    objectData = object.getObjectContent();
-
-                    while ((bytesRead = objectData.read(buffer)) != -1) {
-                        output.write(buffer, 0, bytesRead);
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(S3Client.class.getName()).log(Level.SEVERE, null, ex);
-                    return false;
-                } finally {
-                    try {
-                        output.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(S3Client.class.getName()).log(Level.SEVERE, null, ex);
-                        return false;
-                    }
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(S3Client.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            } finally {
-                try {
-                    objectData.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(S3Client.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-
-        return true;
+        return sTransferUtility;
     }
 
     /**
      * Envia o arquivo para o bucket
      */
-    public boolean upload(final File file, final String s3FileKey, Handler handler) {
-        TransferManager tm = new TransferManager(credentials);
+    public boolean upload(final File file, final String s3FileKey, Handler handler, Context context, String imageKey) {
+        this.handler = handler;
+        TransferUtility transferUtility;
+        transferUtility = S3Client.getTransferUtility(context);
+        if( file.exists() ) {
+            TransferObserver observer = transferUtility.upload(App.AWS_S3_BUCKET_DEFAULT, s3FileKey, file);
+            UploadListener listener = new UploadListener();
+            listener.setImageKey(imageKey);
+            observer.setTransferListener(listener);
+        }
+
+        /*TransferManager tm = new TransferManager(credentials);
         Upload upload = tm.upload(App.AWS_S3_BUCKET_DEFAULT, s3FileKey, file);
 
         int lastVal = 0;
@@ -219,20 +112,65 @@ public class S3Client {
             return true;
         } else {
             return false;
-        }
+        }*/
+
+        return false;
     }
 
     /**
-     * Compara um arquivo do S3 com um local
+     * Exibe o progresso do eventos
      */
-    public boolean compare(S3Object objectS3, File localFile) {
-        long objS3Size = objectS3.getObjectMetadata().getInstanceLength();
-        long localFileSize = localFile.length();
-        if( objS3Size == localFileSize ) {
-            return true;
-        } else {
-            return false;
+    protected void setProgress(Long progress, String imageKey) {
+        Intent intent = new Intent();
+
+        intent.putExtra("progress", progress);
+        intent.putExtra("imageKey", imageKey);
+        intent.putExtra("TESTE", "ABCDEF");
+
+        Message message = new Message();
+        message.obj = intent;
+
+        handler.sendMessage(message);
+    }
+
+    /**********************************************************************************************/
+
+    /*
+     * A TransferListener class that can listen to a upload task and be notified
+     * when the status changes.
+     */
+    private class UploadListener implements TransferListener {
+
+        String imageKey = null;
+
+        public void setImageKey(String imageKey) {
+            this.imageKey = imageKey;
         }
 
+        // Simply updates the UI list when notified.
+        @Override
+        public void onError(int id, Exception e) {
+            Log.e("LOG", "Error during upload: " + id, e);
+        }
+
+        @Override
+        public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+            Long progress = Long.valueOf(0);
+            if( bytesCurrent > 0 ) {
+                progress = bytesCurrent / bytesCurrent * 100;
+            }
+            setProgress(progress, null);
+
+            Log.d("LOG", String.format("onProgressChanged: %d, total: %d, current: %d, percent: %s", id, bytesTotal, bytesCurrent, progress.toString()));
+        }
+
+        @Override
+        public void onStateChanged(int id, TransferState newState) {
+            Log.d("LOG", "onStateChanged: " + id + ", " + newState);
+            if( newState.toString().equals("COMPLETED") ) {
+                Long progress = Long.valueOf(100);
+                setProgress(progress, this.imageKey);
+            }
+        }
     }
 }
