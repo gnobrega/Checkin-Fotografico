@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import br.com.plux.checkinfotografico.bean.CampaignBean;
 import br.com.plux.checkinfotografico.bean.LocationBean;
 import br.com.plux.checkinfotografico.bean.PhotoBean;
+import br.com.plux.checkinfotografico.bean.StationBean;
 import br.com.plux.checkinfotografico.bean.UserBean;
 
 /**
@@ -49,6 +50,13 @@ public class DataBase extends SQLiteOpenHelper {
     public static String TB_PHOTO_ID_USER = "id_user";
     public static String TB_PHOTO_ID_LOCATION = "id_location";
 
+    //Table station
+    public static String TABLE_STATION = "station";
+    public static String TB_STATION_ID = "id";
+    public static String TB_STATION_TEXT = "text";
+    public static String TB_STATION_LOCATION_ID = "locationId";
+    public static String TB_STATION_ST_ID = "stationId";
+
     /**
      * Construtor
      */
@@ -68,6 +76,7 @@ public class DataBase extends SQLiteOpenHelper {
         createTableLocation(db);
         createTableCampaign(db);
         createTablePhoto(db);
+        createTableStation(db);
     }
 
     @Override
@@ -76,6 +85,7 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CAMPAIGN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION);
         onCreate(db);
     }
 
@@ -116,6 +126,19 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     /**
+     * Cria a tabela de estações
+     */
+    public void createTableStation(SQLiteDatabase db) {
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_STATION + "("
+                + "'" + TB_STATION_ID + "'" + " integer primary key autoincrement,"
+                + "'" + TB_STATION_TEXT+ "'"  + " text,"
+                + "'" + TB_STATION_LOCATION_ID + "'"  + " integer,"
+                + "'" + TB_STATION_ST_ID + "'"  + " integer"
+                +")";
+        db.execSQL(sql);
+    }
+
+    /**
      * Cria a tabela de fotos
      */
     public void createTablePhoto(SQLiteDatabase db) {
@@ -138,6 +161,13 @@ public class DataBase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
     }
 
+    /**
+     * Remove a tabela de estações
+     */
+    public void dropTableStation() {
+        db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION);
+    }
     /**
      * Remove a tabela de usuário
      */
@@ -168,6 +198,14 @@ public class DataBase extends SQLiteOpenHelper {
     public void clearCampaigns() {
         db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CAMPAIGN);
+    }
+
+    /**
+     * Limpa a tabela de estações
+     */
+    public void clearStations() {
+        db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_STATION);
     }
 
     /**
@@ -262,6 +300,27 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     /**
+     * Insere um novo ponto
+     */
+    public Long insertStation(int stationId, String text, int locationId){
+
+        db = this.getWritableDatabase();
+        ContentValues station = new ContentValues();
+        station.put(this.TB_STATION_TEXT, text.trim());
+        station.put(this.TB_STATION_LOCATION_ID, locationId);
+        station.put(this.TB_STATION_ST_ID, stationId);
+        Long id = db.insert(this.TABLE_STATION, null, station);
+        db.close();
+
+        if (id ==-1) {
+            //Erro
+            return null;
+        } else {
+            return id;
+        }
+    }
+
+    /**
      * Insere uma nova foto
      */
     public Long insertPhoto(String uri, Integer campaignId, String campaign, Integer userId, Integer locationId){
@@ -349,6 +408,23 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     /**
+     * Converte Cursor em StationBean
+     */
+    public StationBean toStationBean(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex("id"));
+        String stText = cursor.getString(cursor.getColumnIndex("text"));
+        int stLocId = cursor.getInt(cursor.getColumnIndex("locationId"));
+        int stId = cursor.getInt(cursor.getColumnIndex("locationId"));
+
+        StationBean stationBean = new StationBean();
+        stationBean.setId(id);
+        stationBean.setText(stText);
+        stationBean.setLocationId(stLocId);
+        stationBean.setStationId(stId);
+        return stationBean;
+    }
+
+    /**
      * Converte Cursor em PhotoBean
      */
     public PhotoBean toPhotoBean(Cursor cursor) {
@@ -418,6 +494,23 @@ public class DataBase extends SQLiteOpenHelper {
         }
         db.close();
         return lstCampaigns;
+    }
+
+    /**
+     * Carrega a lista de campanhas
+     */
+    public ArrayList<StationBean> loadStatoins(){
+        Cursor cursor;
+        String[] campos =  {"*"};
+        db = this.getReadableDatabase();
+        cursor = db.query(this.TABLE_STATION, campos, null, null, null, null, TB_STATION_TEXT, null);
+        ArrayList<StationBean> lstStations = new ArrayList<StationBean>();
+        while (cursor.moveToNext()) {
+            StationBean stationBean = toStationBean(cursor);
+            lstStations.add(stationBean);
+        }
+        db.close();
+        return lstStations;
     }
 
     /**

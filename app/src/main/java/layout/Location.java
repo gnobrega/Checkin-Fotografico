@@ -91,10 +91,11 @@ public class Location extends Fragment {
                 editor.commit();
 
                 //Redireciona para a tela de checkin
+                int menuKeyCheckin = 3;
                 NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-                navigationView.getMenu().getItem(2).setChecked(true);
+                navigationView.getMenu().getItem(menuKeyCheckin).setChecked(true);
                 MainActivity activity = (MainActivity) getActivity();
-                activity.onNavigationItemSelected(navigationView.getMenu().getItem(2));
+                activity.onNavigationItemSelected(navigationView.getMenu().getItem(menuKeyCheckin));
             }
         });
 

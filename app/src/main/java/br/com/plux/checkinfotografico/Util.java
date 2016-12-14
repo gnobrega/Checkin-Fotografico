@@ -6,15 +6,24 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.view.Display;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -40,6 +49,11 @@ public class Util {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void toast(Context context, String msg) {
+        Toast toast = Toast.makeText(context, msg,Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     private static String convertToHex(byte[] data) {
@@ -122,7 +136,6 @@ public class Util {
 
         //bitmap.recycle();
         //bitmap = null;
-
         try {
             imagefile = new FileOutputStream(src);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, imagefile);
@@ -132,8 +145,6 @@ public class Util {
             bitmap.recycle();
             bitmap = null;
         }
-
-
     }
 
     /**
@@ -218,6 +229,69 @@ public class Util {
             return userBean;
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Recupera a largura da tela
+     */
+    public static int getScreenWidth() {
+        Display display = App.MAIN_ACTIVITY.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
+    }
+
+    /**
+     * Envia uma requisição HTTP
+     */
+    public static String requestHttp(String targetURL, String method)
+    {
+        URL url;
+        HttpURLConnection connection = null;
+        try {
+            url = new URL(targetURL);
+            connection = (HttpURLConnection)url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestMethod(method); // hear you are telling that it is a POST request, which can be changed into "PUT", "GET", "DELETE" etc.
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"); // here you are setting the `Content-Type` for the data you are sending which is `application/json`
+            connection.connect();
+
+            //Send request
+            DataOutputStream wr = new DataOutputStream(
+                    connection.getOutputStream ());
+            //wr.writeBytes(jsonParam.toString());
+            wr.flush();
+            wr.close ();
+
+            InputStream is;
+            int response = connection.getResponseCode();
+            if (response >= 200 && response <=399){
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder rs = new StringBuilder();
+                String line;
+                while ((line = r.readLine()) != null) {
+                    rs.append(line);
+                }
+                //return is = connection.getInputStream();
+                return rs.toString();
+            } else {
+                //return is = connection.getErrorStream();
+                return null;
+            }
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null;
+
+        } finally {
+
+            if(connection != null) {
+                connection.disconnect();
+            }
         }
     }
 }

@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_sync_24dp"
             android:title="Sincronizar" />
         <item
+            android:id="@+id/nav_timeline"
+            android:icon="@mipmap/ic_timeline"
+            android:title="Timeline" />
+        <item
             android:id="@+id/nav_checkin"
             android:icon="@drawable/ic_menu_camera"
             android:title="Checkin" />

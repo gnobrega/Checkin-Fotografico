@@ -38,7 +38,10 @@ public class ImageItem extends RelativeLayout {
         super(context);
         this.parentActivity = parentActivity;
 
-        RelativeLayout.LayoutParams params = (LayoutParams) new RelativeLayout.LayoutParams(300, 200);
+        Integer width = Util.getScreenWidth() / 5;
+        Integer height = 9 * width / 16;
+
+        RelativeLayout.LayoutParams params = (LayoutParams) new RelativeLayout.LayoutParams(width, height);
         this.setLayoutParams(params);
     }
 

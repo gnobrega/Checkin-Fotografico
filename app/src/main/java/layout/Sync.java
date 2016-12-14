@@ -118,9 +118,10 @@ public class Sync extends Fragment {
 
                     try {
                         //Limpa a base local de pontos e campanhas
-                        DataBase db = new DataBase(getActivity().getApplicationContext());
+                        DataBase db = new DataBase(App.MAIN_ACTIVITY.getApplicationContext());
                         db.clearLocations();
                         db.clearCampaigns();
+                        db.clearStations();
                         JSONObject jResp = null;
 
                         //Pontos
@@ -147,6 +148,20 @@ public class Sync extends Fragment {
 
                                 //Insere no banco
                                 db.insertCampaign(campaignId, campaignName);
+                            }
+                        }
+
+                        //Estações
+                        if( !jData.get("stations").getClass().getName().equals("org.json.JSONObject") ) {
+                            JSONArray aStations = (JSONArray) jData.get("stations");
+                            for (int i = 0; i < aStations.length(); i++) {
+                                JSONObject jStation = aStations.getJSONObject(i);
+                                int stationId = jStation.getInt("id");
+                                String stationText = jStation.getString("text");
+                                int locationId = jStation.getInt("locationId");
+
+                                //Insere no banco
+                                db.insertStation(stationId, stationText, locationId);
                             }
                         }
                     } catch (JSONException e) {
@@ -242,17 +257,9 @@ public class Sync extends Fragment {
                             String s3FileKey = "photos"  + "/campaign_" + imageItem.getCampaignId() + "/location_" + locationId + "/user_" + user.getId() + "_" + file.getName();
 
                             //Executa o upload
-                            s3.upload(file, s3FileKey, handlerProgress, thisObj.context, imageKey);
+                            s3.upload(file, s3FileKey, handlerProgress, App.MAIN_ACTIVITY.getApplicationContext(), imageKey);
                         }
                     }
-
-                    //Remove a lista de imagens sincronizadas
-                    /*for( String imageKey : removeImages ) {
-                        ImageItem imageItem = listImageItem.get(imageKey);
-                        if( imageItem != null ) {
-                            imageItem.remover(getActivity());
-                        }
-                    }*/
                 }
 
                 //Fim da sincronia

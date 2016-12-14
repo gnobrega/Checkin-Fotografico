@@ -12,6 +12,7 @@
 
     <!-- Titles -->
     <string name="title_location">Selecione o ponto</string>
+    <string name="title_timeline">Selecione uma estação</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

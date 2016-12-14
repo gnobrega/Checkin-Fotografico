@@ -100,8 +100,8 @@ public class Checkin extends Fragment {
 
                 //Gera a imagem
                 ImageView novaImagem = new ImageView(context);
-                novaImagem.setImageBitmap(Util.resizeImage(context, bitmap, 100));
-                novaImagem.setPadding(5,5,5,5);
+                novaImagem.setImageBitmap(Util.resizeImage(context, bitmap, App.THUMB_WIDTH));
+                novaImagem.setPadding(5, 5, 5, 5);
                 novaImagem.setTag(tagId);
                 novaImagem.setLongClickable(true);
 
@@ -111,6 +111,7 @@ public class Checkin extends Fragment {
                 imageItem.setTagId(tagId);
                 imageItem.addView(novaImagem);
                 imageItem.setRealFile(photoBean.getFile());
+
                 Intent intent = new Intent(context, Checkin.class);
                 intent.putExtra("BitmapImage", bitmap);
                 imageItem.setData(intent);
@@ -291,7 +292,8 @@ public class Checkin extends Fragment {
                 HashMap<String, ImageItem> lstImages = Checkin.listImages.get(locationId);
 
                 //Container
-                grid.setColumnCount(2);
+                Integer cols = 5;
+                grid.setColumnCount(cols);
                 grid.removeAllViews();
 
                 for( String tagId : lstImages.keySet() ) {
@@ -299,6 +301,7 @@ public class Checkin extends Fragment {
                     if( imageItem.getParent() != null ) {
                         ((GridLayout)imageItem.getParent()).removeView(imageItem);
                     }
+
                     grid.addView(imageItem);
                 }
             }
@@ -422,12 +425,13 @@ public class Checkin extends Fragment {
 
         //Container
         GridLayout container = (GridLayout)rootView.findViewById(R.id.capture);
-        container.setColumnCount(2);
+        Integer cols = 5;
+        container.setColumnCount(cols);
 
         //Cria um novo item de imagem
         ImageItem imageItem = new ImageItem(getContext(), this);
         final ImageView novaImagem = new ImageView(getContext());
-        novaImagem.setImageBitmap(Util.resizeImage(rootView.getContext(), bitmap, 100));
+        novaImagem.setImageBitmap(Util.resizeImage(rootView.getContext(), bitmap, App.THUMB_WIDTH));
         novaImagem.setPadding(5,5,5, 5);
         novaImagem.setTag(tagId);
         novaImagem.setLongClickable(true);
