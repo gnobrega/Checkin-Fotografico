@@ -26,7 +26,6 @@ public class CustomAdpter extends BaseAdapter {
         this.layoutItemId = layoutItemId;
         mData = new ArrayList();
         mData.addAll(map.entrySet());
-        System.out.println("teste");
     }
 
     @Override

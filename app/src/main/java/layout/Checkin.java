@@ -9,13 +9,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import br.com.plux.checkinfotografico.App;
@@ -49,12 +50,15 @@ import br.com.plux.checkinfotografico.bean.PhotoBean;
 public class Checkin extends Fragment {
     private Bitmap bitmap;
     private ViewGroup rootView;
+    public static ViewGroup rootViewStatic;
     public HashMap<String, Intent> listImage = new HashMap<String, Intent>();
     public static int countImg = 0;
     public static HashMap<Integer, HashMap> listImages = new HashMap<Integer, HashMap>();
     FrameLayout checkinContainer;
     Menu menu = null;
     public Context context = null;
+    public static Integer currentGrid = -1;
+    public static Integer lastGrid = null;
 
     public static Fragment newInstance(Context context) {
         Checkin c = new Checkin();
@@ -75,6 +79,7 @@ public class Checkin extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Checkin.lastGrid = 0;
 
         //Carrega os dados das imagens armazenadas no banco
         this.loadPhotoDb(getContext(), this);
@@ -111,6 +116,7 @@ public class Checkin extends Fragment {
                 imageItem.setTagId(tagId);
                 imageItem.addView(novaImagem);
                 imageItem.setRealFile(photoBean.getFile());
+                imageItem.setKeyGrid(photoBean.getKey_grid());
 
                 Intent intent = new Intent(context, Checkin.class);
                 intent.putExtra("BitmapImage", bitmap);
@@ -128,7 +134,7 @@ public class Checkin extends Fragment {
                 if (Checkin.listImages.containsKey(locationId)) {
                     Checkin.listImages.get(locationId).put(tagId, imageItem);
                 } else {
-                    HashMap<String, ImageItem> lstImages = new HashMap<>();
+                    HashMap<String, ImageItem> lstImages = new LinkedHashMap<>();
                     lstImages.put(tagId, imageItem);
                     Checkin.listImages.put(locationId, lstImages);
                 }
@@ -162,7 +168,7 @@ public class Checkin extends Fragment {
         final HashMap<String, ImageItem> listImages = Checkin.getItensSelected(getActivity());
 
         //Verifica o menu selecionado
-        if (id == R.id.action_attr_camp) { //Menu atribuir campanha
+        /*if (id == R.id.action_attr_camp) { //Menu atribuir campanha
 
             if( listImages.size() == 0 ) {
                 Toast.makeText(getActivity(), "Selecione pelo menos uma imagem", Toast.LENGTH_SHORT).show();
@@ -174,6 +180,12 @@ public class Checkin extends Fragment {
             }
 
             return true;
+        } else*/
+
+        //Adiciona uma nova tela
+        if(id == R.id.action_attr_nova_tela) {
+            adicionarGrid();
+
         } else if(id == R.id.action_attr_preview) { //Menu preview
             if( listImages.size() > 1 ) {
                 Toast.makeText(getActivity(), "Selecione apenas uma imagem", Toast.LENGTH_SHORT).show();
@@ -237,6 +249,41 @@ public class Checkin extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    public void adicionarGrid() {
+        LinearLayout containerGrid = (LinearLayout)rootView.findViewById(R.id.containerGrid);
+
+        GridLayout lastGrid = getLastGrid();
+        if( lastGrid != null && lastGrid.getChildCount() == 0 ) {
+            return;
+        }
+
+        GridLayout grid = new GridLayout(App.MAIN_ACTIVITY);
+        grid.setColumnCount(App.getGridCols());
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , 5);
+        View sep = new LinearLayout(App.MAIN_ACTIVITY);
+        sep.setLayoutParams(lp);
+        sep.setBackgroundColor(Color.GRAY);
+
+        containerGrid.addView(grid);
+        containerGrid.addView(sep);
+        Checkin.currentGrid ++;
+    }
+
+    public static GridLayout getLastGrid() {
+        LinearLayout containerGrid = (LinearLayout)Checkin.rootViewStatic.findViewById(R.id.containerGrid);
+        GridLayout grid = null;
+        if( containerGrid != null ) {
+            for (Integer i = 0; i < containerGrid.getChildCount(); i++) {
+                View item = containerGrid.getChildAt(i);
+                if (item instanceof GridLayout) {
+                    grid =  (GridLayout) item;
+                }
+            }
+        }
+        return grid;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -264,7 +311,13 @@ public class Checkin extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_checkin, null);
+        Checkin.rootViewStatic = rootView;
         checkinContainer = (FrameLayout)rootView.findViewById(R.id.checkinContent);
+
+        //Cria a primeira grid
+        if( Checkin.currentGrid == -1 ) {
+            adicionarGrid();
+        }
 
         //Clique no botão da câmera
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
@@ -277,32 +330,37 @@ public class Checkin extends Fragment {
         });
 
         //Limpa a grid
-        GridLayout grid = (GridLayout)rootView.findViewById(R.id.capture);
-        grid.removeAllViews();
+        GridLayout grid = getLastGrid();
+        if( grid != null ) {
+            grid.removeAllViews();
+            Checkin.lastGrid = 0;
 
-        //Exibe o ponto selecionado
-        SharedPreferences sharedpreferences = getActivity().getSharedPreferences("location", Context.MODE_PRIVATE);
-        Integer locationId = sharedpreferences.getInt("id", 0);
-        if( sharedpreferences != null && locationId != 0 ) {
-            TextView locationName = (TextView)rootView.findViewById(R.id.checkinLocationName);
-            locationName.append(sharedpreferences.getString("name", ""));
+            //Exibe o ponto selecionado
+            SharedPreferences sharedpreferences = getActivity().getSharedPreferences("location", Context.MODE_PRIVATE);
+            Integer locationId = sharedpreferences.getInt("id", 0);
+            if (sharedpreferences != null && locationId != 0) {
+                TextView locationName = (TextView) rootView.findViewById(R.id.checkinLocationName);
+                locationName.append(sharedpreferences.getString("name", ""));
 
-            //Devolve as imagens já cadastradas à grid
-            if( Checkin.listImages.containsKey(locationId) && Checkin.listImages.get(locationId) != null ) {
-                HashMap<String, ImageItem> lstImages = Checkin.listImages.get(locationId);
+                //Devolve as imagens já cadastradas à grid
+                if (Checkin.listImages.containsKey(locationId) && Checkin.listImages.get(locationId) != null) {
+                    HashMap<String, ImageItem> lstImages = Checkin.listImages.get(locationId);
 
-                //Container
-                Integer cols = 5;
-                grid.setColumnCount(cols);
-                grid.removeAllViews();
+                    //Container
+                    grid.removeAllViews();
 
-                for( String tagId : lstImages.keySet() ) {
-                    ImageItem imageItem = (ImageItem)lstImages.get(tagId);
-                    if( imageItem.getParent() != null ) {
-                        ((GridLayout)imageItem.getParent()).removeView(imageItem);
+                    for (String tagId : lstImages.keySet()) {
+                        ImageItem imageItem = (ImageItem) lstImages.get(tagId);
+                        if (imageItem.getParent() != null) {
+                            ((GridLayout) imageItem.getParent()).removeView(imageItem);
+                        }
+                        if (Checkin.lastGrid != imageItem.getKeyGrid()) {
+                            adicionarGrid();
+                            grid = getLastGrid();
+                        }
+
+                        grid.addView(imageItem);
                     }
-
-                    grid.addView(imageItem);
                 }
             }
         }
@@ -360,8 +418,6 @@ public class Checkin extends Fragment {
         } else {
             startActivityForResult(intent, 0);
         }
-
-
     }
 
     /**
@@ -387,17 +443,16 @@ public class Checkin extends Fragment {
         try {
             countImg ++;
             String tagId = "image"+ countImg;
-            bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mImageUri);
+            bitmap = MediaStore.Images.Media.getBitmap(App.MAIN_ACTIVITY.getContentResolver(), mImageUri);
 
             //Comprime a imagem
             Util.compressImage(getContext(), urlFile);
 
             //Adiciona ao banco de dados
             DataBase dataBase = new DataBase(getContext());
-            Long photoDbId = dataBase.insertPhoto(urlFile, null, "", Util.getUserSession(getContext()).getId(), getLocation());
+            Long photoDbId = dataBase.insertPhoto(urlFile, null, "", Util.getUserSession(getContext()).getId(), getLocation(), Checkin.currentGrid);
 
             //Adiciona à grid
-            //addGridImg(bitmap, tagId, data.getDataString(), data, urlFile, photoDbId);
             addGridImg(bitmap, tagId, data, urlFile, photoDbId);
 
             //Armazena no array
@@ -424,15 +479,14 @@ public class Checkin extends Fragment {
     public void addGridImg(Bitmap bitmap, String tagId, Intent data, String urlFile, Long photoDbId) {
 
         //Container
-        GridLayout container = (GridLayout)rootView.findViewById(R.id.capture);
-        Integer cols = 5;
-        container.setColumnCount(cols);
+        GridLayout container = getLastGrid();
+        container.setColumnCount(App.getGridCols());
 
         //Cria um novo item de imagem
         ImageItem imageItem = new ImageItem(getContext(), this);
         final ImageView novaImagem = new ImageView(getContext());
         novaImagem.setImageBitmap(Util.resizeImage(rootView.getContext(), bitmap, App.THUMB_WIDTH));
-        novaImagem.setPadding(5,5,5, 5);
+        novaImagem.setPadding(5, 5, 5, 5);
         novaImagem.setTag(tagId);
         novaImagem.setLongClickable(true);
         //imageItem.setUri(uri);
@@ -441,6 +495,7 @@ public class Checkin extends Fragment {
         imageItem.addView(novaImagem);
         imageItem.setRealFile(urlFile);
         imageItem.setIdDb(photoDbId);
+        imageItem.setKeyGrid(Checkin.currentGrid);
         container.addView(imageItem);
 
         bitmap.recycle();
@@ -463,7 +518,7 @@ public class Checkin extends Fragment {
     public void onBack(MainActivity activity) {
 
         //Recupera as imagens
-        GridLayout container = (GridLayout)activity.findViewById(R.id.capture);
+        GridLayout container = getLastGrid();
 
         if( container != null ) {
             for (int i = 0; i < container.getChildCount(); i++) {
@@ -479,7 +534,7 @@ public class Checkin extends Fragment {
     public static HashMap<String, ImageItem> getItensSelected(Activity activity) {
 
         //Recupera as imagens
-        GridLayout container = (GridLayout)activity.findViewById(R.id.capture);
+        GridLayout container = Checkin.getLastGrid();
         HashMap<String, ImageItem> listItens = new HashMap<String, ImageItem>();
 
         for( int i = 0; i < container.getChildCount(); i ++ ) {
@@ -497,7 +552,7 @@ public class Checkin extends Fragment {
 
     public static Integer getItemIndex(Activity activity, ImageItem imgItem) {
         //Recupera as imagens
-        GridLayout container = (GridLayout)activity.findViewById(R.id.capture);
+        GridLayout container = Checkin.getLastGrid();
         for( int i = 0; i < container.getChildCount(); i ++ ) {
             View item = container.getChildAt(i);
             if( item instanceof ImageItem ) {

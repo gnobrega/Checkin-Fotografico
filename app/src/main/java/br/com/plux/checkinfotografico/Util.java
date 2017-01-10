@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.Display;
@@ -292,6 +294,17 @@ public class Util {
             if(connection != null) {
                 connection.disconnect();
             }
+        }
+    }
+
+    public static Boolean isWifi() {
+        ConnectivityManager connManager = (ConnectivityManager) App.MAIN_ACTIVITY.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        if (mWifi.isConnected()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

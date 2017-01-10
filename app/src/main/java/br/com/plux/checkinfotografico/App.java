@@ -1,6 +1,7 @@
 package br.com.plux.checkinfotografico;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Environment;
 
 /**
@@ -13,6 +14,8 @@ public class App {
     public static String SERVER_GET_ROUTE = App.SERVER_API_HOST + "get-route";
     public static Activity MAIN_ACTIVITY = null;
     public static Integer THUMB_WIDTH = 100;
+    public static Integer GRID_COLS_PORTRAIT = 3;
+    public static Integer GRID_COLS_LANDSCAPE = 5;
 
     //AWS
     public static String AWS_S3_BUCKET_DEFAULT = "checkin-fotografico";
@@ -25,4 +28,15 @@ public class App {
     public static String DS_USER = "sandrade";
     public static String DS_PASS = "Senha01";
     public static String DS_DOMAIN = "pluto.signage.me";
+
+    //Menu keys
+    public static Integer MENU_CHECKIN_INDEX = 2;
+
+    public static Integer getGridCols() {
+        if( MAIN_ACTIVITY.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ) {
+            return GRID_COLS_PORTRAIT;
+        } else {
+            return GRID_COLS_LANDSCAPE;
+        }
+    }
 }

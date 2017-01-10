@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private GoogleApiClient client;
     private View mProgress;
     private View mContainerMain;
+    private static Integer lastMenuSelected = null;
     Camera camera;
 
     @Override
@@ -43,6 +44,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         App.MAIN_ACTIVITY = this;
+
+
+        DataBase db = new DataBase(this.getApplicationContext());
+        //db.cl
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,8 +60,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(0).setChecked(true);
-        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        Integer menuIndex = 0;
+        if( MainActivity.lastMenuSelected != null ) {
+            menuIndex = MainActivity.lastMenuSelected;
+            String fragmentClass = getFragmentByMenu(menuIndex);
+            loadFragment(fragmentClass);
+        }
+        navigationView.getMenu().getItem(menuIndex).setChecked(true);
+        onNavigationItemSelected(navigationView.getMenu().getItem(menuIndex));
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -104,12 +116,37 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-            //return true;
-        //}
-
         return super.onOptionsItemSelected(item);
+    }
+
+    public Integer getMenuIndex(Integer id) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        for( int i = 0; i < navigationView.getMenu().size(); i ++ ) {
+            if( id == navigationView.getMenu().getItem(i).getItemId() ) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public String getFragmentByMenu(Integer menuIndex) {
+        String fragmentClass = "";
+        switch( menuIndex ) {
+            case 0:
+                fragmentClass = "layout.Location";
+                break;
+            case 1:
+                fragmentClass = "layout.Timeline";
+                break;
+            case 2:
+                fragmentClass = "layout.Checkin";
+                break;
+            case 3:
+                fragmentClass = "layout.Sync";
+                break;
+        }
+        return fragmentClass;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -119,7 +156,7 @@ public class MainActivity extends AppCompatActivity
         //Recupera o id do menu clicado
         int id = item.getItemId();
         String fragmentClass = "";
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        MainActivity.lastMenuSelected = getMenuIndex(id);
 
         //Identifica o menu selecionado
         switch (id) {
@@ -153,14 +190,19 @@ public class MainActivity extends AppCompatActivity
 
         //Carrega a tela referente ao item clicado
         if (!fragmentClass.equals("")) {
-            FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-            tx.replace(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentClass));
-            tx.commit();
-
-            //Oculta o menu
-            drawer.closeDrawer(GravityCompat.START);
+            loadFragment(fragmentClass);
         }
         return true;
+    }
+
+    public void loadFragment(String fragmentClass) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.flContent, Fragment.instantiate(MainActivity.this, fragmentClass));
+        tx.commit();
+
+        //Oculta o menu
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     /**

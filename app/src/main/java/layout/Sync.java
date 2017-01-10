@@ -21,7 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import br.com.plux.checkinfotografico.App;
@@ -40,6 +42,7 @@ public class Sync extends Fragment {
     int totalFotos = 0;
     int fotoAtual = 0;
     private HashMap<Integer, HashMap> listImages = Checkin.listImages;
+    public static Boolean syncPhotosFinished = false;
 
     public static Fragment newInstance(Context context) {
         Sync f = new Sync();
@@ -57,7 +60,7 @@ public class Sync extends Fragment {
         getActivity().setTitle("Sincronia");
 
         //Mantém a comunicação com a interface
-        setStatus("Verificando a conexão com a internet...");
+        setStatus("\nVerificando a conexão com a internet...");
 
         //Verifica se tem conexão com a internet
         if (Connection.checkConnection(getActivity().getApplicationContext())) {
@@ -66,7 +69,11 @@ public class Sync extends Fragment {
             syncData();
 
             //Sincroniza as fotos
-            syncPhotos();
+            if ( Util.isWifi() ) {
+                syncPhotos();
+            } else {
+                Util.toast(App.MAIN_ACTIVITY.getApplicationContext(), "As fotos só serão sincronizadas em uma conexão wifi");
+            }
         }
 
         return rootView;
@@ -109,10 +116,11 @@ public class Sync extends Fragment {
             public void run() {
 
                 //Recupera o usuário da sessão
-                SharedPreferences sharedpreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+                SharedPreferences sharedpreferences = App.MAIN_ACTIVITY.getSharedPreferences("user", Context.MODE_PRIVATE);
                 Integer userId = sharedpreferences.getInt("id", 0);
 
                 //Busca a lista de pontos no servidor
+                sendMessage("\nBaixando informações do servidor...", handler);
                 String sResp = Connection.get(App.SERVER_GET_ROUTE + "/" + userId + ".json");
                 if (sResp != null) {
 
@@ -137,19 +145,23 @@ public class Sync extends Fragment {
                             //Insere no banco
                             db.insertLocation(locationId, locationName, locationIdRoute);
                         }
+                        sendMessage("\nSincronia de localizações - SUCESSO", handler);
 
                         //Campanhas
                         if( !jData.get("campaigns").getClass().getName().equals("org.json.JSONObject") ) {
                             JSONArray aCampaigns = (JSONArray) jData.get("campaigns");
                             for (int i = 0; i < aCampaigns.length(); i++) {
                                 JSONObject jCampaign = aCampaigns.getJSONObject(i);
-                                int campaignId = jCampaign.getInt("id");
-                                String campaignName = jCampaign.getString("campanha");
+                                Integer campaignId = jCampaign.getInt("id");
+                                if( campaignId != null ) {
+                                    String campaignName = jCampaign.getString("campanha");
 
-                                //Insere no banco
-                                db.insertCampaign(campaignId, campaignName);
+                                    //Insere no banco
+                                    db.insertCampaign(campaignId, campaignName);
+                                }
                             }
                         }
+                        sendMessage("\nSincronia de campanhas - SUCESSO", handler);
 
                         //Estações
                         if( !jData.get("stations").getClass().getName().equals("org.json.JSONObject") ) {
@@ -164,8 +176,11 @@ public class Sync extends Fragment {
                                 db.insertStation(stationId, stationText, locationId);
                             }
                         }
+                        sendMessage("\nSincronia de estações DS - SUCESSO", handler);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        sendMessage("\nERRO - " + e.getMessage(), handler);
                     }
 
                 }
@@ -176,15 +191,12 @@ public class Sync extends Fragment {
     public void setStatus(String msg) {
         if( Looper.myLooper() == Looper.getMainLooper() ) {
             TextView syncStatus = (TextView) rootView.findViewById(R.id.syncStatus);
-            syncStatus.setText(msg);
+            syncStatus.append(msg);
         }
     }
 
     public void syncPhotos() {
         final Sync thisObj = this;
-
-        //Status
-        setStatus("Sincronizando as fotografias...");
 
         //Permite o acesso à interface através de Thread
         final Handler handler = new Handler() {
@@ -220,12 +232,15 @@ public class Sync extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = curFormater.format(c.getTime());
 
                 //Recarrega as imagens do banco de dados
-                Checkin.loadPhotoDb(getContext(), null);
+                Checkin.loadPhotoDb(App.MAIN_ACTIVITY.getApplicationContext(), null);
 
                 //Recupera o usuario da sessao
-                UserBean user = Util.getUserSession(getContext());
+                UserBean user = Util.getUserSession(App.MAIN_ACTIVITY.getApplicationContext());
 
                 //Recupera as fotografias
                 S3Client s3 = new S3Client();
@@ -236,7 +251,7 @@ public class Sync extends Fragment {
                     for( String imageKey : listImageItem.keySet() ) {
                         ImageItem imageItem = listImageItem.get(imageKey);
                         File file = new File(imageItem.getRealFile());
-                        if( file.exists() && imageItem.getCampaignId() != null ) {
+                        if( file.exists() ) {
                             totalFotos ++;
                         }
                     }
@@ -251,19 +266,17 @@ public class Sync extends Fragment {
                         ImageItem imageItem = listImageItem.get(imageKey);
 
                         File file = new File(imageItem.getRealFile());
-                        if( file.exists() && imageItem.getCampaignId() != null ) {
+                        if( file.exists() ) {
                             fotoAtual ++;
-                            sendMessage("Enviando " + fotoAtual + " de " + totalFotos, handler);
-                            String s3FileKey = "photos"  + "/campaign_" + imageItem.getCampaignId() + "/location_" + locationId + "/user_" + user.getId() + "_" + file.getName();
+                            sendMessage("\nEnviando " + fotoAtual + " de " + totalFotos, handler);
+                            String s3FileKey = "photos"  + "/location_" + locationId + "/" + formattedDate + "_user_" + user.getId() + "_"
+                                    + "station_" + imageItem.getKeyGrid() + "_" + file.getName();
 
                             //Executa o upload
                             s3.upload(file, s3FileKey, handlerProgress, App.MAIN_ACTIVITY.getApplicationContext(), imageKey);
                         }
                     }
                 }
-
-                //Fim da sincronia
-                sendMessage("Sincronia finalizada", handler);
             }
         }).start();
 
@@ -281,8 +294,9 @@ public class Sync extends Fragment {
             ProgressBar bar = (ProgressBar) rootView.findViewById(R.id.syncProgress);
             bar.setProgress(val.intValue());
 
-            if( totalFotos == fotoAtual && val == 100 ) {
-                setStatus("Sincronia finalizada");
+            if( totalFotos == fotoAtual && val == 100 && !Sync.syncPhotosFinished ) {
+                setStatus("\nSincronia de fotos - SUCESSO");
+                Sync.syncPhotosFinished = true;
             }
         }
     }

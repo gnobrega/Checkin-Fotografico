@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
+    <!--<item
         android:id="@+id/action_attr_camp"
         android:orderInCategory="100"
         android:title="Atribuir campanha"
+        app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_attr_nova_tela"
+        android:orderInCategory="100"
+        android:title="Nova tela"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_attr_ver_capanha"

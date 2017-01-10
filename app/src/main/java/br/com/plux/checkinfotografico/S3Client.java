@@ -94,26 +94,6 @@ public class S3Client {
             observer.setTransferListener(listener);
         }
 
-        /*TransferManager tm = new TransferManager(credentials);
-        Upload upload = tm.upload(App.AWS_S3_BUCKET_DEFAULT, s3FileKey, file);
-
-        int lastVal = 0;
-        while (upload.isDone() == false) {
-            if( (int)upload.getProgress().getPercentTransferred() != lastVal ) {
-                lastVal = (int)upload.getProgress().getPercentTransferred();
-                Message message = new Message();
-                message.obj = lastVal;
-                handler.sendMessage(message);
-            }
-        }
-
-        //Upload finalizado
-        if( upload.isDone() ) {
-            return true;
-        } else {
-            return false;
-        }*/
-
         return false;
     }
 
@@ -125,7 +105,6 @@ public class S3Client {
 
         intent.putExtra("progress", progress);
         intent.putExtra("imageKey", imageKey);
-        intent.putExtra("TESTE", "ABCDEF");
 
         Message message = new Message();
         message.obj = intent;

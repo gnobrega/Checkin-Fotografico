@@ -10,6 +10,7 @@ public class PhotoBean {
     private int id_campaign;
     private int id_user;
     private int id_location;
+    private int key_grid;
 
     public Long getId() {
         return id;
@@ -57,5 +58,13 @@ public class PhotoBean {
 
     public void setCampaign(String campaign) {
         this.campaign = campaign;
+    }
+
+    public int getKey_grid() {
+        return key_grid;
+    }
+
+    public void setKey_grid(int key_grid) {
+        this.key_grid = key_grid;
     }
 }

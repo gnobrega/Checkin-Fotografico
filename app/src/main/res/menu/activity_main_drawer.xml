@@ -7,10 +7,6 @@
             android:icon="@drawable/ic_pin_drop_24dp"
             android:title="Pontos" />
         <item
-            android:id="@+id/nav_sync"
-            android:icon="@drawable/ic_sync_24dp"
-            android:title="Sincronizar" />
-        <item
             android:id="@+id/nav_timeline"
             android:icon="@mipmap/ic_timeline"
             android:title="Timeline" />
@@ -19,6 +15,15 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Checkin" />
     </group>
+
+    <item android:title="Sincronia">
+        <menu>
+            <item
+                android:id="@+id/nav_sync"
+                android:icon="@drawable/ic_sync_24dp"
+                android:title="Sincronizar" />
+        </menu>
+    </item>
 
     <item android:title="Configurações">
         <menu>

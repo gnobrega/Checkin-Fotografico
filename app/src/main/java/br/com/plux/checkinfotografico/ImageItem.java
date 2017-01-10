@@ -32,13 +32,14 @@ public class ImageItem extends RelativeLayout {
     String campaignName = "";
     Boolean editable = false;
     String realFile = "";
+    Integer keyGrid = null;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ImageItem(Context context, Checkin parentActivity) {
         super(context);
         this.parentActivity = parentActivity;
 
-        Integer width = Util.getScreenWidth() / 5;
+        Integer width = Util.getScreenWidth() / App.getGridCols() - 50;
         Integer height = 9 * width / 16;
 
         RelativeLayout.LayoutParams params = (LayoutParams) new RelativeLayout.LayoutParams(width, height);
@@ -83,6 +84,14 @@ public class ImageItem extends RelativeLayout {
 
     public String getTagId() {
         return this.tagId;
+    }
+
+    public Integer getKeyGrid() {
+        return keyGrid;
+    }
+
+    public void setKeyGrid(Integer keyGrid) {
+        this.keyGrid = keyGrid;
     }
 
     @Override
@@ -234,7 +243,7 @@ public class ImageItem extends RelativeLayout {
     public void remover(Activity activity) {
 
         //Recupera as imagens
-        GridLayout container = (GridLayout)activity.findViewById(R.id.capture);
+        GridLayout container = Checkin.getLastGrid();
         if( container != null ) {
             container.removeView(this);
             this.destroyDrawingCache();
@@ -254,7 +263,7 @@ public class ImageItem extends RelativeLayout {
         }
 
         //Remove do array
-        SharedPreferences sharedpreferences = activity.getSharedPreferences("location", Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = App.MAIN_ACTIVITY.getSharedPreferences("location", Context.MODE_PRIVATE);
         Integer locationId = sharedpreferences.getInt("id", 0);
         if( Checkin.listImages.containsKey(locationId) ) {
             if( Checkin.listImages.get(locationId).containsKey(this.tagId) ) {

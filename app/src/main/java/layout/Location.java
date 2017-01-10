@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import br.com.plux.checkinfotografico.App;
 import br.com.plux.checkinfotografico.DataBase;
 import br.com.plux.checkinfotografico.MainActivity;
 import br.com.plux.checkinfotografico.R;
@@ -91,11 +92,10 @@ public class Location extends Fragment {
                 editor.commit();
 
                 //Redireciona para a tela de checkin
-                int menuKeyCheckin = 3;
                 NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-                navigationView.getMenu().getItem(menuKeyCheckin).setChecked(true);
+                navigationView.getMenu().getItem(App.MENU_CHECKIN_INDEX).setChecked(true);
                 MainActivity activity = (MainActivity) getActivity();
-                activity.onNavigationItemSelected(navigationView.getMenu().getItem(menuKeyCheckin));
+                activity.onNavigationItemSelected(navigationView.getMenu().getItem(App.MENU_CHECKIN_INDEX));
             }
         });
 

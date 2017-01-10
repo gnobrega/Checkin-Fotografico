@@ -49,6 +49,7 @@ public class DataBase extends SQLiteOpenHelper {
     public static String TB_PHOTO_CAMPAIGN = "campaign";
     public static String TB_PHOTO_ID_USER = "id_user";
     public static String TB_PHOTO_ID_LOCATION = "id_location";
+    public static String TB_PHOTO_KEY_GRID = "key_grid";
 
     //Table station
     public static String TABLE_STATION = "station";
@@ -148,7 +149,8 @@ public class DataBase extends SQLiteOpenHelper {
                 + "'" + TB_PHOTO_CAMPAIGN+ "'"  + " text,"
                 + "'" + TB_PHOTO_ID_CAMPAIGN+ "'"  + " integer,"
                 + "'" + TB_PHOTO_ID_USER+ "'"  + " integer,"
-                + "'" + TB_PHOTO_ID_LOCATION+ "'"  + " integer"
+                + "'" + TB_PHOTO_ID_LOCATION+ "'"  + " integer,"
+                + "'" + TB_PHOTO_KEY_GRID+ "'"  + " integer"
                 +")";
         db.execSQL(sql);
     }
@@ -323,7 +325,7 @@ public class DataBase extends SQLiteOpenHelper {
     /**
      * Insere uma nova foto
      */
-    public Long insertPhoto(String uri, Integer campaignId, String campaign, Integer userId, Integer locationId){
+    public Long insertPhoto(String uri, Integer campaignId, String campaign, Integer userId, Integer locationId, Integer keyGrid){
 
         db = this.getWritableDatabase();
         ContentValues photo = new ContentValues();
@@ -332,6 +334,7 @@ public class DataBase extends SQLiteOpenHelper {
         photo.put(this.TB_PHOTO_CAMPAIGN, campaign);
         photo.put(this.TB_PHOTO_ID_USER, userId);
         photo.put(this.TB_PHOTO_ID_LOCATION, locationId);
+        photo.put(this.TB_PHOTO_KEY_GRID, keyGrid);
 
         Long photoId = db.insert(this.TABLE_PHOTO, null, photo);
         db.close();
@@ -434,6 +437,7 @@ public class DataBase extends SQLiteOpenHelper {
         int photoIdCam = cursor.getInt(cursor.getColumnIndex(TB_PHOTO_ID_CAMPAIGN));
         String photoCam = cursor.getString(cursor.getColumnIndex(TB_PHOTO_CAMPAIGN));
         int photoIdUser = cursor.getInt(cursor.getColumnIndex(TB_PHOTO_ID_USER));
+        int keyGridUser = cursor.getInt(cursor.getColumnIndex(TB_PHOTO_KEY_GRID));
 
         PhotoBean photoBean = new PhotoBean();
         photoBean.setId(photoId);
@@ -442,6 +446,7 @@ public class DataBase extends SQLiteOpenHelper {
         photoBean.setCampaign(photoCam);
         photoBean.setId_campaign(photoIdCam);
         photoBean.setId_user(photoIdUser);
+        photoBean.setKey_grid(keyGridUser);
 
         return photoBean;
     }
@@ -520,7 +525,7 @@ public class DataBase extends SQLiteOpenHelper {
         Cursor cursor;
         String[] campos =  {"*"};
         db = this.getReadableDatabase();
-        cursor = db.query(this.TABLE_PHOTO, campos, null, null, null, null, null, null);
+        cursor = db.query(this.TABLE_PHOTO, campos, null, null, null, null, TB_PHOTO_ID + " ASC", null);
         ArrayList<PhotoBean> lstPhotos = new ArrayList<PhotoBean>();
         while (cursor.moveToNext()) {
             PhotoBean photoBean = toPhotoBean(cursor);
