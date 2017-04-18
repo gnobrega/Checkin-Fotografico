@@ -96,6 +96,8 @@ public class Location extends Fragment {
                 navigationView.getMenu().getItem(App.MENU_CHECKIN_INDEX).setChecked(true);
                 MainActivity activity = (MainActivity) getActivity();
                 activity.onNavigationItemSelected(navigationView.getMenu().getItem(App.MENU_CHECKIN_INDEX));
+
+                Checkin.currentGrid = -1;
             }
         });
 

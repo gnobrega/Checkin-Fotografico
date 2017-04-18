@@ -45,11 +45,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         App.MAIN_ACTIVITY = this;
 
-
-        DataBase db = new DataBase(this.getApplicationContext());
-        //db.cl
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

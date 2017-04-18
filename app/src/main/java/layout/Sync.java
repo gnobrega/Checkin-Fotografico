@@ -168,12 +168,12 @@ public class Sync extends Fragment {
                             JSONArray aStations = (JSONArray) jData.get("stations");
                             for (int i = 0; i < aStations.length(); i++) {
                                 JSONObject jStation = aStations.getJSONObject(i);
-                                int stationId = jStation.getInt("id");
+                                int stId = jStation.getInt("id");
                                 String stationText = jStation.getString("text");
                                 int locationId = jStation.getInt("locationId");
 
                                 //Insere no banco
-                                db.insertStation(stationId, stationText, locationId);
+                                db.insertStation(stId, stationText, locationId);
                             }
                         }
                         sendMessage("\nSincronia de estações DS - SUCESSO", handler);
@@ -232,6 +232,7 @@ public class Sync extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd");
                 String formattedDate = curFormater.format(c.getTime());

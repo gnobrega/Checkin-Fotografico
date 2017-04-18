@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -51,6 +52,24 @@ public class Timeline extends Fragment {
         //Alimenta a lista de pontos
         populateStation();
 
+        //Troca todas as estações de uma vez
+        Button btnTrocar = (Button) rootView.findViewById(R.id.btnTrocarEstacoes);
+        btnTrocar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Carrega os pontos do banco de dados
+                DataBase db = new DataBase(getActivity());
+                ArrayList<StationBean> aLstStations = db.loadStatoins();
+                for( int i = 0; i < aLstStations.size(); i ++ ) {
+                    StationBean stationBean = aLstStations.get(i);
+                    if( stationBean.getLocationId() == locationId ) {
+                        String temp = " " + stationBean.getId();
+                        Util.toast(App.MAIN_ACTIVITY.getApplicationContext(), temp);
+                    }
+                    //changeTimeline(stationBean.getStationId());
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -76,7 +95,7 @@ public class Timeline extends Fragment {
 
         //Carrega os pontos do banco de dados
         DataBase db = new DataBase(getActivity());
-        ArrayList<StationBean> aLstStations = db.loadStatoins();
+        final ArrayList<StationBean> aLstStations = db.loadStatoins();
         for( int i = 0; i < aLstStations.size(); i ++ ) {
             StationBean stationBean = aLstStations.get(i);
             if( stationBean != null && (this.locationId == null || this.locationId == stationBean.getLocationId()) ) {
@@ -95,8 +114,7 @@ public class Timeline extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Map.Entry<Integer, String> locationEntry = (Map.Entry<Integer, String>)parent.getItemAtPosition(position);
 
-                //Executa a troca da timeline
-                changeTimeline();
+                //changeTimeline();
             }
         });
 
@@ -134,7 +152,7 @@ public class Timeline extends Fragment {
     /**
      * Exibe a timeline de publicidade
      */
-    private void changeTimeline() {
+    private void changeTimeline(final Integer dsId) {
 
         //Permite o acesso à interface através de Thread
         final Handler handler = new Handler() {
@@ -155,13 +173,13 @@ public class Timeline extends Fragment {
                     String userPass = App.DS_USER + "," + App.DS_PASS;
                     byte[] data = userPass.getBytes("UTF-8");
                     String dsPass64 = Base64.encodeToString(data, Base64.DEFAULT).replace("=", ".").replace("\n", "");
-                    String url = "https://" + App.DS_DOMAIN + "/WebService/sendCommand.ashx?i_userpass=" + dsPass64 + "&i_stationId=" + locationId  + "&i_command=event" + "&i_param1=checking&i_param2=1&callback=";
+                    String url = "https://" + App.DS_DOMAIN + "/WebService/sendCommand.ashx?i_userpass=" + dsPass64 + "&i_stationId=" + dsId  + "&i_command=event" + "&i_param1=checking&i_param2=1&callback=";
                     String resp = Util.requestHttp(url, "GET").replace("(", "").replace(")", "");
                     JSONObject jsonResp = new JSONObject(resp);
                     String ret = jsonResp.getString("ret");
                     Message message = new Message();
                     if( ret.equals("success") ) {
-                        message.obj = new String("Sucesso!");
+                        message.obj = new String("# " + dsId + ": Sucesso!");
                         handler.sendMessage(message);
                     } else {
                         message.obj = new String("Falhou!");

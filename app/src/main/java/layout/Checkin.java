@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,9 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,6 +60,7 @@ public class Checkin extends Fragment {
     public Context context = null;
     public static Integer currentGrid = -1;
     public static Integer lastGrid = null;
+    private Integer totalFiles = 0;
 
     public static Fragment newInstance(Context context) {
         Checkin c = new Checkin();
@@ -184,7 +186,13 @@ public class Checkin extends Fragment {
 
         //Adiciona uma nova tela
         if(id == R.id.action_attr_nova_tela) {
-            adicionarGrid();
+            GridLayout lastGrid = getLastGrid();
+            if( lastGrid != null && lastGrid.getChildCount() == 0 ) {
+                //Impede inserir várias grids vazias
+            } else {
+                Checkin.currentGrid ++;
+                adicionarGrid();
+            }
 
         } else if(id == R.id.action_attr_preview) { //Menu preview
             if( listImages.size() > 1 ) {
@@ -249,9 +257,24 @@ public class Checkin extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    public Integer countGrids() {
+        LinearLayout containerGrid = (LinearLayout)rootView.findViewById(R.id.containerGrid);
+        Integer total = 0;
+        if( containerGrid != null ) {
+            for (Integer i = 0; i < containerGrid.getChildCount(); i++) {
+                View item = containerGrid.getChildAt(i);
+                if (item instanceof GridLayout) {
+                    total ++;
+                }
+            }
+        } else {
+            return null;
+        }
+        return total;
+    }
+
     public void adicionarGrid() {
         LinearLayout containerGrid = (LinearLayout)rootView.findViewById(R.id.containerGrid);
-
         GridLayout lastGrid = getLastGrid();
         if( lastGrid != null && lastGrid.getChildCount() == 0 ) {
             return;
@@ -261,27 +284,33 @@ public class Checkin extends Fragment {
         grid.setColumnCount(App.getGridCols());
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT , 5);
+        lp.setMargins(0, 10, 0, 0);
         View sep = new LinearLayout(App.MAIN_ACTIVITY);
         sep.setLayoutParams(lp);
         sep.setBackgroundColor(Color.GRAY);
 
         containerGrid.addView(grid);
         containerGrid.addView(sep);
-        Checkin.currentGrid ++;
+
+        Log.i("*LOG*", "Nova grid adicionada. Total: " + countGrids() + " || Grid atual: " + Checkin.currentGrid);
     }
 
     public static GridLayout getLastGrid() {
-        LinearLayout containerGrid = (LinearLayout)Checkin.rootViewStatic.findViewById(R.id.containerGrid);
-        GridLayout grid = null;
-        if( containerGrid != null ) {
-            for (Integer i = 0; i < containerGrid.getChildCount(); i++) {
-                View item = containerGrid.getChildAt(i);
-                if (item instanceof GridLayout) {
-                    grid =  (GridLayout) item;
+        if( Checkin.rootViewStatic != null ) {
+            LinearLayout containerGrid = (LinearLayout) Checkin.rootViewStatic.findViewById(R.id.containerGrid);
+            GridLayout grid = null;
+            if (containerGrid != null) {
+                for (Integer i = 0; i < containerGrid.getChildCount(); i++) {
+                    View item = containerGrid.getChildAt(i);
+                    if (item instanceof GridLayout) {
+                        grid = (GridLayout) item;
+                    }
                 }
             }
+            return grid;
+        } else {
+            return null;
         }
-        return grid;
     }
 
     @Override
@@ -315,15 +344,21 @@ public class Checkin extends Fragment {
         checkinContainer = (FrameLayout)rootView.findViewById(R.id.checkinContent);
 
         //Cria a primeira grid
-        if( Checkin.currentGrid == -1 ) {
+        LinearLayout containerGrid = (LinearLayout)Checkin.rootViewStatic.findViewById(R.id.containerGrid);
+        if( containerGrid.getChildCount() == 0 ) {
             adicionarGrid();
         }
+        if( Checkin.currentGrid == -1 ) {
+            Checkin.currentGrid = 0;
+        }
+        Log.i("*LOG*", "onCreateView() || Checkin.currentGrid: "+Checkin.currentGrid+" || countGrids(): " + countGrids());
 
         //Clique no botão da câmera
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                lstUrlFileCamera.clear();
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 openCam();
             }
@@ -331,37 +366,45 @@ public class Checkin extends Fragment {
 
         //Limpa a grid
         GridLayout grid = getLastGrid();
-        if( grid != null ) {
-            grid.removeAllViews();
-            Checkin.lastGrid = 0;
+        Checkin.lastGrid = 0;
 
-            //Exibe o ponto selecionado
-            SharedPreferences sharedpreferences = getActivity().getSharedPreferences("location", Context.MODE_PRIVATE);
-            Integer locationId = sharedpreferences.getInt("id", 0);
-            if (sharedpreferences != null && locationId != 0) {
-                TextView locationName = (TextView) rootView.findViewById(R.id.checkinLocationName);
-                locationName.append(sharedpreferences.getString("name", ""));
+        //Exibe o ponto selecionado
+        SharedPreferences sharedpreferences = getActivity().getSharedPreferences("location", Context.MODE_PRIVATE);
+        Integer locationId = sharedpreferences.getInt("id", 0);
+        if (sharedpreferences != null && locationId != 0) {
+            TextView locationName = (TextView) rootView.findViewById(R.id.checkinLocationName);
+            locationName.append(sharedpreferences.getString("name", ""));
 
-                //Devolve as imagens já cadastradas à grid
-                if (Checkin.listImages.containsKey(locationId) && Checkin.listImages.get(locationId) != null) {
-                    HashMap<String, ImageItem> lstImages = Checkin.listImages.get(locationId);
+            //Devolve as imagens já cadastradas à grid
+            if (Checkin.listImages.containsKey(locationId) && Checkin.listImages.get(locationId) != null) {
+                HashMap<String, ImageItem> lstImages = Checkin.listImages.get(locationId);
 
-                    //Container
-                    grid.removeAllViews();
+                //Container
+                grid.removeAllViews();
 
-                    for (String tagId : lstImages.keySet()) {
-                        ImageItem imageItem = (ImageItem) lstImages.get(tagId);
-                        if (imageItem.getParent() != null) {
-                            ((GridLayout) imageItem.getParent()).removeView(imageItem);
-                        }
-                        if (Checkin.lastGrid != imageItem.getKeyGrid()) {
-                            adicionarGrid();
-                            grid = getLastGrid();
-                        }
-
-                        grid.addView(imageItem);
+                for (String tagId : lstImages.keySet()) {
+                    ImageItem imageItem = (ImageItem) lstImages.get(tagId);
+                    if (imageItem.getParent() != null) {
+                        ((GridLayout) imageItem.getParent()).removeView(imageItem);
                     }
+                    if (Checkin.lastGrid != imageItem.getKeyGrid()) {
+                        Checkin.lastGrid = imageItem.getKeyGrid();
+                        adicionarGrid();
+                        grid = getLastGrid();
+                    }
+
+                    grid.addView(imageItem);
                 }
+
+                //Mantém a última grid vazia caso exista
+                if( Checkin.currentGrid == -1 ) {
+                    Checkin.currentGrid = countGrids() - 1;
+                }
+                if( Checkin.currentGrid >= countGrids() ) {
+                    adicionarGrid();
+                }
+
+                //Log.i("*LOG*", "onCreateView() || Total de grids em uso: " + countGrids() + " || Total de grids adicionadas: " + Checkin.currentGrid);
             }
         }
 
@@ -376,7 +419,20 @@ public class Checkin extends Fragment {
     String urlFile;
     public void openCam() {
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+
+
+        /****************/
+        totalFiles = countFiles();
+        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+        intent = Intent.createChooser(intent, "Select Camera");
+        List<ResolveInfo> activities = App.MAIN_ACTIVITY.getApplicationContext().getPackageManager().queryIntentActivities(intent, 0);
+        //startActivityForResult(intent, 0);
+        /***************/
+
+
+
         intent.putExtra("android.intent.extra.quickCapture", true);
         String pathPhotos = App.PATH_PHOTOS;
 
@@ -392,16 +448,16 @@ public class Checkin extends Fragment {
         if( !dir.exists() ) {
             dir.mkdir();
         }
-        try {
-            File photo = File.createTempFile("picture", ".jpg", dir);
-            photo.delete();
-            urlFile = photo.getAbsolutePath();
-            mImageUri = Uri.fromFile(photo);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        /*String nameFile = System.currentTimeMillis() + ".jpg";
+        File photo = new File(dir, nameFile);
+        photo.delete();
+        urlFile = photo.getAbsolutePath();
+        mImageUri = Uri.fromFile(photo);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        //Armazena a uri na sessão
+        Util.setSessionString("urlFile",urlFile);
+        */
 
         //Verifica se o aparelho possui a permissão da câmera
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -418,6 +474,7 @@ public class Checkin extends Fragment {
         } else {
             startActivityForResult(intent, 0);
         }
+
     }
 
     /**
@@ -425,58 +482,105 @@ public class Checkin extends Fragment {
      */
     public void onActivityResult(int resquestCode, int resultCode, Intent data) {
         super.onActivityResult(resquestCode, resultCode, data);
-        if(resquestCode == 0 && resultCode == Activity.RESULT_OK) {
-            addImage(data);
-            openCam();
+        switch (resquestCode) {
+
+            case 0:
+                exitingCamera();
+                break;
         }
+
     }
+
+    /****** Utilizado para tirar fotografias em sequência ******/
+    private Integer countFiles() {
+        Cursor cursor = loadCursorFiles();
+        return cursor.getCount();
+    }
+    private void exitingCamera() {
+        Cursor cursor = loadCursorFiles();
+        String[] paths = getImagePaths(cursor, totalFiles);
+        cursor.close();
+        for( String path : paths ) {
+            guardarImagensCamera(path);
+        }
+        tratarImagensCamera();
+    }
+    public Cursor loadCursorFiles() {
+
+        final String[] columns = { MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media._ID };
+
+        final String orderBy = MediaStore.Images.Media.DATE_ADDED;
+
+        return App.MAIN_ACTIVITY.getApplicationContext().getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null,
+                null, orderBy);
+    }
+    public String[] getImagePaths(Cursor cursor, int startPosition) {
+        int size = cursor.getCount() - startPosition;
+        if (size <= 0)
+            return null;
+        String[] paths = new String[size];
+        int dataColumnIndex = cursor
+                .getColumnIndex(MediaStore.Images.Media.DATA);
+        for (int i = startPosition; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
+            paths[i - startPosition] = cursor.getString(dataColumnIndex);
+        }
+        return paths;
+    }
+    /**************************************************************/
 
     /**
      * Adiciona a imagem ao array
      */
-    public void addImage(Intent data) {
+    public List<String> lstUrlFileCamera = new ArrayList<>();
+    //public void guardarImagensCamera(Intent data) {
+    public void guardarImagensCamera(String urlFile) {
 
-        InputStream stream = null;
-        if(bitmap != null) {
-            bitmap.recycle();
+        File photo = new File(urlFile);
+        if( photo.exists() ) {
+
+            //Realoca a imagem
+            int pos = urlFile.lastIndexOf("/");
+            String newPhoto = App.PATH_PHOTOS + urlFile.substring(pos);
+            File newPhotoFile = new File(newPhoto);
+            Util.moveFile(photo, newPhotoFile);
+            if( newPhotoFile.exists() ) {
+                //Recupera o bitmap
+                //bitmap = MediaStore.Images.Media.getBitmap(App.MAIN_ACTIVITY.getContentResolver(), mImageUri);
+                lstUrlFileCamera.add(newPhoto);
+            }
+        } else {
+            Log.e("Log", mImageUri.getPath() + " não existe");
         }
-        try {
+    }
+
+    public void tratarImagensCamera() {
+
+        for( int i = 0; i < lstUrlFileCamera.size(); i ++ ) {
+            urlFile = lstUrlFileCamera.get(i);
+            Bitmap bitmap = Util.getBitmapFile(urlFile);
+
             countImg ++;
             String tagId = "image"+ countImg;
-            bitmap = MediaStore.Images.Media.getBitmap(App.MAIN_ACTIVITY.getContentResolver(), mImageUri);
 
             //Comprime a imagem
-            Util.compressImage(getContext(), urlFile);
+            Util.compressImage(App.MAIN_ACTIVITY.getApplicationContext(), urlFile);
 
             //Adiciona ao banco de dados
             DataBase dataBase = new DataBase(getContext());
-            Long photoDbId = dataBase.insertPhoto(urlFile, null, "", Util.getUserSession(getContext()).getId(), getLocation(), Checkin.currentGrid);
+            Long photoDbId = dataBase.insertPhoto(urlFile, null, "", Util.getUserSession(App.MAIN_ACTIVITY.getApplicationContext()).getId(), getLocation(), Checkin.currentGrid);
 
             //Adiciona à grid
-            addGridImg(bitmap, tagId, data, urlFile, photoDbId);
-
-            //Armazena no array
-            listImage.put(tagId, data);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if( stream != null ) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            addGridImg(bitmap, tagId, urlFile, photoDbId);
         }
     }
 
     /**
      * Adiciona a imagem à grid
      */
-    public void addGridImg(Bitmap bitmap, String tagId, Intent data, String urlFile, Long photoDbId) {
+    public void addGridImg(Bitmap bitmap, String tagId, String urlFile, Long photoDbId) {
 
         //Container
         GridLayout container = getLastGrid();
@@ -491,7 +595,7 @@ public class Checkin extends Fragment {
         novaImagem.setLongClickable(true);
         //imageItem.setUri(uri);
         imageItem.setTagId(tagId);
-        imageItem.setData(data);
+        //imageItem.setData(data);
         imageItem.addView(novaImagem);
         imageItem.setRealFile(urlFile);
         imageItem.setIdDb(photoDbId);
@@ -534,15 +638,25 @@ public class Checkin extends Fragment {
     public static HashMap<String, ImageItem> getItensSelected(Activity activity) {
 
         //Recupera as imagens
-        GridLayout container = Checkin.getLastGrid();
         HashMap<String, ImageItem> listItens = new HashMap<String, ImageItem>();
 
-        for( int i = 0; i < container.getChildCount(); i ++ ) {
-            View item = container.getChildAt(i);
-            if( item instanceof ImageItem ) {
-                ImageItem imageItem = (ImageItem)item;
-                if( imageItem.getEditable() ) {
-                    listItens.put((imageItem).getTagId(), imageItem);
+        LinearLayout containerGrid = (LinearLayout)Checkin.rootViewStatic.findViewById(R.id.containerGrid);
+        GridLayout grid = null;
+        if( containerGrid != null ) {
+            for (Integer i = 0; i < containerGrid.getChildCount(); i++) {
+                View itemG = containerGrid.getChildAt(i);
+                if( itemG instanceof GridLayout ) {
+                    grid = (GridLayout)itemG;
+
+                    for( int j = 0; j < grid.getChildCount(); j ++ ) {
+                        View item = grid.getChildAt(j);
+                        if( item instanceof ImageItem ) {
+                            ImageItem imageItem = (ImageItem)item;
+                            if( imageItem.getEditable() ) {
+                                listItens.put((imageItem).getTagId(), imageItem);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -567,3 +681,4 @@ public class Checkin extends Fragment {
     }
 
 }
+

@@ -17,8 +17,11 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -26,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -305,6 +309,46 @@ public class Util {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void setSessionString(String key, String value) {
+        SharedPreferences sharedpreferences = App.MAIN_ACTIVITY.getSharedPreferences(key, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    public static String getSessionString(String key) {
+        SharedPreferences sharedpreferences = App.MAIN_ACTIVITY.getSharedPreferences(key, Context.MODE_PRIVATE);
+        String value = sharedpreferences.getString(key, "");
+        return value;
+    }
+
+    public static Boolean copyFile(File src, File dst) throws IOException {
+        FileChannel inChannel = new FileInputStream(src).getChannel();
+        FileChannel outChannel = new FileOutputStream(dst).getChannel();
+        try {
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        } catch (Exception e) {
+            return false;
+        } finally {
+            if (inChannel != null)
+                inChannel.close();
+            if (outChannel != null)
+                outChannel.close();
+        }
+        return true;
+    }
+
+    public static void moveFile(File src, File dst) {
+        try {
+            copyFile(src, dst);
+            if( dst.exists() ) {
+                src.delete();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -13,6 +13,12 @@
         android:singleLine="true"
         android:hint="Filtro"/>
 
+    <Button
+        android:id="@+id/btnTrocarEstacoes"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Trocar todas"/>
+
     <LinearLayout
         android:id="@+id/containerListView"
         android:layout_width="match_parent"

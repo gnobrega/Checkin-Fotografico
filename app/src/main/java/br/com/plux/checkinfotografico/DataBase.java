@@ -308,9 +308,9 @@ public class DataBase extends SQLiteOpenHelper {
 
         db = this.getWritableDatabase();
         ContentValues station = new ContentValues();
+        station.put(this.TB_STATION_ID, stationId);
         station.put(this.TB_STATION_TEXT, text.trim());
         station.put(this.TB_STATION_LOCATION_ID, locationId);
-        station.put(this.TB_STATION_ST_ID, stationId);
         Long id = db.insert(this.TABLE_STATION, null, station);
         db.close();
 
@@ -417,13 +417,11 @@ public class DataBase extends SQLiteOpenHelper {
         int id = cursor.getInt(cursor.getColumnIndex("id"));
         String stText = cursor.getString(cursor.getColumnIndex("text"));
         int stLocId = cursor.getInt(cursor.getColumnIndex("locationId"));
-        int stId = cursor.getInt(cursor.getColumnIndex("locationId"));
 
         StationBean stationBean = new StationBean();
         stationBean.setId(id);
         stationBean.setText(stText);
         stationBean.setLocationId(stLocId);
-        stationBean.setStationId(stId);
         return stationBean;
     }
 

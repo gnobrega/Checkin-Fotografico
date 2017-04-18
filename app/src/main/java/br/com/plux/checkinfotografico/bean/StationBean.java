@@ -7,7 +7,6 @@ public class StationBean {
     private int id;
     private String text;
     private int locationId;
-    private int stationId;
 
     public int getId() {
         return id;
@@ -31,13 +30,5 @@ public class StationBean {
 
     public void setLocationId(int locationId) {
         this.locationId = locationId;
-    }
-
-    public int getStationId() {
-        return stationId;
-    }
-
-    public void setStationId(int stationId) {
-        this.stationId = stationId;
     }
 }
