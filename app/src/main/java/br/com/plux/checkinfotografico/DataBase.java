@@ -131,7 +131,7 @@ public class DataBase extends SQLiteOpenHelper {
      */
     public void createTableStation(SQLiteDatabase db) {
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_STATION + "("
-                + "'" + TB_STATION_ID + "'" + " integer primary key autoincrement,"
+                + "'" + TB_STATION_ID + "'" + " integer,"
                 + "'" + TB_STATION_TEXT+ "'"  + " text,"
                 + "'" + TB_STATION_LOCATION_ID + "'"  + " integer,"
                 + "'" + TB_STATION_ST_ID + "'"  + " integer"

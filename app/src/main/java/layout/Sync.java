@@ -121,7 +121,8 @@ public class Sync extends Fragment {
 
                 //Busca a lista de pontos no servidor
                 sendMessage("\nBaixando informações do servidor...", handler);
-                String sResp = Connection.get(App.SERVER_GET_ROUTE + "/" + userId + ".json");
+                String sResp = Connection.get(App.SERVER_GET_ROUTE + "/" + userId + ".json?nocache=" + Math.random());
+                Util.log(App.SERVER_GET_ROUTE + "/" + userId + ".json?+nocache=" + Math.random());
                 if (sResp != null) {
 
                     try {
@@ -222,7 +223,7 @@ public class Sync extends Fragment {
                         thisObj.removerItem(imageKey);
                     }
 
-                    sendProgress(progress);
+                    sendProgress(progress, imageKey);
 
                 }
             }
@@ -274,6 +275,7 @@ public class Sync extends Fragment {
                                     + "station_" + imageItem.getKeyGrid() + "_" + file.getName();
 
                             //Executa o upload
+                            Util.log("Uploading: " + s3FileKey);
                             s3.upload(file, s3FileKey, handlerProgress, App.MAIN_ACTIVITY.getApplicationContext(), imageKey);
                         }
                     }
@@ -290,14 +292,24 @@ public class Sync extends Fragment {
         handler.sendMessage(message);
     }
 
-    void sendProgress(Long val) {
+    private ArrayList<String> fotosUp = new ArrayList<>();
+    void sendProgress(Long val, String imageKey) {
         if( Looper.myLooper() == Looper.getMainLooper() ) {
             ProgressBar bar = (ProgressBar) rootView.findViewById(R.id.syncProgress);
-            bar.setProgress(val.intValue());
+            if( val >= 100 ) {
+                if( !fotosUp.contains(imageKey) && imageKey != null ) {
+                    fotosUp.add(imageKey);
 
-            if( totalFotos == fotoAtual && val == 100 && !Sync.syncPhotosFinished ) {
-                setStatus("\nSincronia de fotos - SUCESSO");
-                Sync.syncPhotosFinished = true;
+                    //Progresso
+                    Integer progress = 100 * fotosUp.size() / totalFotos;
+                    bar.setProgress(progress);
+
+                    //Upload finalizado
+                    if( fotosUp.size() >= totalFotos && !syncPhotosFinished ) {
+                        setStatus("\nSincronia de fotos - SUCESSO");
+                        syncPhotosFinished = true;
+                    }
+                }
             }
         }
     }

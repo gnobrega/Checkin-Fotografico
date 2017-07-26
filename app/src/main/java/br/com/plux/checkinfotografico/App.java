@@ -1,6 +1,7 @@
 package br.com.plux.checkinfotografico;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Environment;
 
@@ -13,6 +14,7 @@ public class App {
     public static String SERVER_GET_USERS = App.SERVER_API_HOST + "get-users-checkin.json";
     public static String SERVER_GET_ROUTE = App.SERVER_API_HOST + "get-route";
     public static Activity MAIN_ACTIVITY = null;
+    public static Context context = null;
     public static Integer THUMB_WIDTH = 100;
     public static Integer GRID_COLS_PORTRAIT = 3;
     public static Integer GRID_COLS_LANDSCAPE = 5;
@@ -25,8 +27,8 @@ public class App {
     public static String PATH_PHOTOS = Environment.getExternalStorageDirectory() + "/Checkin";
 
     //Digital Signage
-    public static String DS_USER = "sandrade";
-    public static String DS_PASS = "Senha01";
+    public static String DS_USER = "checking@plux.com.br";
+    public static String DS_PASS = "123456";
     public static String DS_DOMAIN = "pluto.signage.me";
 
     //Menu keys

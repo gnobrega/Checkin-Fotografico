@@ -18,18 +18,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/syncProgress" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sincronia iniciada..."
                 android:layout_marginTop="10dp"
                 android:id="@+id/syncStatus"/>
-
-            <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/syncProgress" />
 
         </LinearLayout>
 

@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -18,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -82,6 +82,14 @@ public class Checkin extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         Checkin.lastGrid = 0;
+
+        //Verifica se o aparelho possui a permissão de escrita no sdcard
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Integer PERMISSIONS_REQUEST_WRITE = 1;
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE);
+        }
 
         //Carrega os dados das imagens armazenadas no banco
         this.loadPhotoDb(getContext(), this);
@@ -163,26 +171,18 @@ public class Checkin extends Fragment {
         }
     }
 
+    public void refreshFragment() {
+        FragmentTransaction tx = ((MainActivity)App.MAIN_ACTIVITY).getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.flContent, Fragment.instantiate(App.MAIN_ACTIVITY, "layout.Checkin"));
+        tx.commit();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
         final HashMap<String, ImageItem> listImages = Checkin.getItensSelected(getActivity());
-
-        //Verifica o menu selecionado
-        /*if (id == R.id.action_attr_camp) { //Menu atribuir campanha
-
-            if( listImages.size() == 0 ) {
-                Toast.makeText(getActivity(), "Selecione pelo menos uma imagem", Toast.LENGTH_SHORT).show();
-            } else {
-
-                CampaignDialog campaignDialog = new CampaignDialog();
-                FragmentManager fm = this.getFragmentManager();
-                campaignDialog.show(fm, "fragment_checkin");
-            }
-
-            return true;
-        } else*/
+        final Checkin checkin = this;
 
         //Adiciona uma nova tela
         if(id == R.id.action_attr_nova_tela) {
@@ -226,6 +226,9 @@ public class Checkin extends Fragment {
                                     ImageItem imageItem = listImages.get(tagId);
                                     imageItem.remover(getActivity());
                                 }
+
+                                //Regarrega a grid
+                                refreshFragment();
                             }
 
                         })
@@ -419,45 +422,17 @@ public class Checkin extends Fragment {
     String urlFile;
     public void openCam() {
 
-        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-
-
-        /****************/
         totalFiles = countFiles();
         Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
         intent = Intent.createChooser(intent, "Select Camera");
-        List<ResolveInfo> activities = App.MAIN_ACTIVITY.getApplicationContext().getPackageManager().queryIntentActivities(intent, 0);
-        //startActivityForResult(intent, 0);
-        /***************/
-
-
 
         intent.putExtra("android.intent.extra.quickCapture", true);
         String pathPhotos = App.PATH_PHOTOS;
-
-        //Verifica se o aparelho possui a permissão de escrita no sdcard
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Integer PERMISSIONS_REQUEST_WRITE = 1;
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSIONS_REQUEST_WRITE);
-        }
 
         File dir = new File(pathPhotos);
         if( !dir.exists() ) {
             dir.mkdir();
         }
-
-        /*String nameFile = System.currentTimeMillis() + ".jpg";
-        File photo = new File(dir, nameFile);
-        photo.delete();
-        urlFile = photo.getAbsolutePath();
-        mImageUri = Uri.fromFile(photo);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-        //Armazena a uri na sessão
-        Util.setSessionString("urlFile",urlFile);
-        */
 
         //Verifica se o aparelho possui a permissão da câmera
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -500,8 +475,10 @@ public class Checkin extends Fragment {
         Cursor cursor = loadCursorFiles();
         String[] paths = getImagePaths(cursor, totalFiles);
         cursor.close();
-        for( String path : paths ) {
-            guardarImagensCamera(path);
+        if( paths != null ) {
+            for (String path : paths) {
+                guardarImagensCamera(path);
+            }
         }
         tratarImagensCamera();
     }
@@ -552,7 +529,7 @@ public class Checkin extends Fragment {
                 lstUrlFileCamera.add(newPhoto);
             }
         } else {
-            Log.e("Log", mImageUri.getPath() + " não existe");
+            Log.e("Log", "Imagem não encontrada: " + urlFile);
         }
     }
 

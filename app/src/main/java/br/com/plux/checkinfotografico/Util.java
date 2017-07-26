@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Display;
 import android.widget.Toast;
 
@@ -348,6 +349,31 @@ public class Util {
                 src.delete();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Log
+     */
+    public static void log(String msg) {
+        Log.i("CHECKIN", msg);
+    }
+
+    /**
+     * Log de erro
+     */
+    public static void logError(String msg) {
+        Log.e("CHECKIN", msg);
+    }
+
+    /**
+     * Aguarda um tempo
+     */
+    public static void sleep(Integer delay) {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

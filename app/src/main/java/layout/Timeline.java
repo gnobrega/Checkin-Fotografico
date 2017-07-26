@@ -61,11 +61,13 @@ public class Timeline extends Fragment {
                 ArrayList<StationBean> aLstStations = db.loadStatoins();
                 for( int i = 0; i < aLstStations.size(); i ++ ) {
                     StationBean stationBean = aLstStations.get(i);
+
+                    //Isola as telas do local selecionado
                     if( stationBean.getLocationId() == locationId ) {
-                        String temp = " " + stationBean.getId();
+                        String temp = "Enviando comando. Estação #" + stationBean.getId();
+                        changeTimeline(stationBean.getId());
                         Util.toast(App.MAIN_ACTIVITY.getApplicationContext(), temp);
                     }
-                    //changeTimeline(stationBean.getStationId());
                 }
             }
         });
@@ -179,7 +181,7 @@ public class Timeline extends Fragment {
                     String ret = jsonResp.getString("ret");
                     Message message = new Message();
                     if( ret.equals("success") ) {
-                        message.obj = new String("# " + dsId + ": Sucesso!");
+                        message.obj = new String("Estação # " + dsId + ": Sucesso!");
                         handler.sendMessage(message);
                     } else {
                         message.obj = new String("Falhou!");

@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         final AppCompatActivity thisActivity = this;
+        App.context = getApplicationContext();
 
         //Sincroniza a base de usuários
         Connection.activity = this;

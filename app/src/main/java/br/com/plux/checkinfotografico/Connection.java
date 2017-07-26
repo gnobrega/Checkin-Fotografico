@@ -4,17 +4,19 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 
 
 /**
@@ -39,57 +41,31 @@ public class Connection {
         return true;
     }
 
-    public static String get(String sUrl){
+    public static String get(final String sUrl){
+        final String[] resp = {null};
 
-        InputStream is = null;
-        int len = 500;
-
-        try {
-            URL url = new URL(sUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            conn.setRequestProperty("content-type", "application/json");
-            // Starts the query
-            conn.connect();
-            int response = conn.getResponseCode();
-            is = conn.getInputStream();
-
-
-
-
-            InputStreamReader isw = new InputStreamReader(is, "ISO-8859-1");
-            String resp = "";
-            int data = isw.read();
-            while (data != -1) {
-                char current = (char) data;
-                data = isw.read();
-                resp += current;
+        RequestQueue queue = Volley.newRequestQueue(App.context);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, sUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        resp[0] = response;
+                        Util.log("Request response: " + response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Util.logError("Erro na requisição: " + sUrl);
+                resp[0] = "";
             }
+        });
+        queue.add(stringRequest);
 
-            return resp;
-        } catch (MalformedURLException e) {
-            Log.i("Conexão", "Sem conexão com a internet");
-            //e.printStackTrace();
-        } catch (ProtocolException e) {
-            Log.i("Conexão", "Sem conexão com a internet");
-            //e.printStackTrace();
-        } catch (IOException e) {
-            Log.i("Conexão", "Sem conexão com a internet");
-            //e.printStackTrace();
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    Log.i("Conexão", "Sem conexão com a internet");
-                    //e.printStackTrace();
-                }
-            }
+        //Aguarda a resposta
+        while (resp[0] == null) {
+            Util.sleep(1000);
         }
-        return null;
+        return resp[0];
     }
 
     // Reads an InputStream and converts it to a String.

@@ -6,11 +6,11 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="progress" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4382ee4-1df2-40a3-86c8-5b5dc12e9fea" name="Default" comment="" />
+    <list default="true" id="d0f0d645-270e-4f7e-b4b9-f9681a7b6a7e" name="Default" comment="" />
     <ignored path="Checkin-Fotografico.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,84 +37,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Checkin.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Timeline.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Timeline.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="116" column="38" selection-start-line="116" selection-start-column="38" selection-end-line="116" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Checkin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.385567">
-              <caret line="487" column="32" selection-start-line="487" selection-start-column="32" selection-end-line="487" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="525" column="27" selection-start-line="525" selection-start-column="27" selection-end-line="525" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Util.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/Util.java">
+      <file leaf-file-name="Sync.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Sync.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.73540854">
+              <caret line="309" column="33" selection-start-line="309" selection-start-column="33" selection-end-line="309" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="File.java" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
+      <file leaf-file-name="S3Client.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/S3Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#43793#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#4511#4512#0" expanded="false" />
-                <element signature="e#4573#4574#0" expanded="false" />
-                <element signature="e#4842#4843#0" expanded="false" />
-                <element signature="e#4886#4887#0" expanded="false" />
-                <element signature="e#9207#9208#0" expanded="false" />
-                <element signature="e#9258#9259#0" expanded="false" />
-                <element signature="e#9610#9611#0" expanded="false" />
-                <element signature="e#9647#9648#0" expanded="false" />
-                <element signature="e#9861#9862#0" expanded="false" />
-                <element signature="e#9898#9899#0" expanded="false" />
-                <element signature="e#10130#10131#0" expanded="false" />
-                <element signature="e#10167#10168#0" expanded="false" />
-                <element signature="e#10801#10802#0" expanded="false" />
-                <element signature="e#10867#10868#0" expanded="false" />
-                <element signature="e#12245#12246#0" expanded="false" />
-                <element signature="e#12314#12315#0" expanded="false" />
-                <element signature="e#13092#13093#0" expanded="false" />
-                <element signature="e#13129#13130#0" expanded="false" />
-                <element signature="e#13988#13989#0" expanded="false" />
-                <element signature="e#14038#14039#0" expanded="false" />
-                <element signature="e#17817#17818#0" expanded="false" />
-                <element signature="e#17844#17845#0" expanded="false" />
-                <element signature="e#18125#18126#0" expanded="false" />
-                <element signature="e#18178#18179#0" expanded="false" />
-                <element signature="e#18540#18541#0" expanded="false" />
-                <element signature="e#18615#18616#0" expanded="false" />
-                <element signature="e#21660#21661#0" expanded="false" />
-                <element signature="e#21708#21709#0" expanded="false" />
-                <element signature="e#23123#23124#0" expanded="false" />
-                <element signature="e#23177#23178#0" expanded="false" />
-                <element signature="e#24423#24424#0" expanded="false" />
-                <element signature="e#24473#24474#0" expanded="false" />
-                <element signature="e#25567#25568#0" expanded="false" />
-                <element signature="e#25617#25618#0" expanded="false" />
-                <element signature="e#26891#26892#0" expanded="false" />
-                <element signature="e#26928#26929#0" expanded="false" />
-                <element signature="e#28510#28511#0" expanded="false" />
-                <element signature="e#28557#28558#0" expanded="false" />
-                <element signature="e#29261#29262#0" expanded="false" />
-                <element signature="e#29314#29315#0" expanded="false" />
-                <element signature="e#32844#32845#0" expanded="false" />
-                <element signature="e#32880#32881#0" expanded="false" />
-                <element signature="e#39090#39091#0" expanded="false" />
-                <element signature="e#39117#39118#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="-4.827586">
+              <caret line="139" column="13" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
+              <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fragment_sync.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sync.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.4827585">
+              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -122,10 +94,8 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -598,6 +568,11 @@
                 <option name="description" value="Prepare com.android.support:support-vector-drawable:23.4.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareComAndroidSupportSupportVectorDrawable2340Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.volley:volley:1.0.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComAndroidVolleyVolley100Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.google.android.gms:play-services-appindexing:8.1.0" />
@@ -1182,6 +1157,11 @@
                 <option name="name" value="prepareComAndroidSupportSupportVectorDrawable2340Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.volley:volley:1.0.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareComAndroidVolleyVolley100Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Prepare com.google.android.gms:play-services-appindexing:8.1.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareComGoogleAndroidGmsPlayServicesAppindexing810Library" />
@@ -1467,7 +1447,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="$PROJECT_DIR$/../allegro/platforms/android" value="5794037772845" />
-        <entry key="D:\workspace\android\Checkin-Fotografico" value="7386141110055" />
+        <entry key="D:\workspace\android\Checkin-Fotografico" value="7404907516034" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1683,6 +1663,7 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/commons-codec/commons-codec/1.4/commons-codec-1.4.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/intellij/annotations/12.0/annotations-12.0-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/intellij/annotations/12.0/annotations-12.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.volley/volley/1.0.0/8c3f383fc51fc498dbd77f103f8c4ad23c9ac35f/volley-1.0.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/23.4.0/appcompat-v7-23.4.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/design/23.4.0/design-23.4.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.4.0/support-v4-23.4.0.aar" />
@@ -2044,8 +2025,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/Util.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/layout/Timeline.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/layout/Checkin.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_sync.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/layout/Sync.java" />
       </list>
     </option>
   </component>
@@ -2088,6 +2072,10 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2096,19 +2084,93 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Checkin-Fotografico" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Checkin-Fotografico" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Checkin-Fotografico" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Checkin-Fotografico" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Checkin-Fotografico" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="checkinfotografico" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0026375312" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0031858814" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_17" />
     <property name="FullScreen" value="false" />
   </component>
@@ -2252,48 +2314,40 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d4382ee4-1df2-40a3-86c8-5b5dc12e9fea" name="Default" comment="" />
-      <created>1489602026810</created>
+      <changelist id="d0f0d645-270e-4f7e-b4b9-f9681a7b6a7e" name="Default" comment="" />
+      <created>1500059946555</created>
       <option name="number" value="Default" />
-      <updated>1489602026810</updated>
+      <updated>1500059946555</updated>
     </task>
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="1" width="1678" height="1008" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902467" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902467" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39717978" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902467" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24969098" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32902467" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24969098" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17391305" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2315,201 +2369,11 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java</url>
-          <line>558</line>
-          <properties class="layout.Checkin" method="tratarImagensCamera" />
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="9" />
-    </breakpoint-manager>
+    <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="487" column="32" selection-start-line="487" selection-start-column="32" selection-end-line="487" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="510" column="50" selection-start-line="510" selection-start-column="50" selection-end-line="510" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Timeline.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -2517,636 +2381,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/DataBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="306" column="43" selection-start-line="306" selection-start-column="34" selection-end-line="306" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Timeline.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/provider/MediaStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="866" column="39" selection-start-line="866" selection-start-column="39" selection-end-line="866" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/provider/MediaStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="866" column="39" selection-start-line="866" selection-start-column="39" selection-end-line="866" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/provider/MediaStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="866" column="39" selection-start-line="866" selection-start-column="39" selection-end-line="866" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/provider/MediaStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="866" column="39" selection-start-line="866" selection-start-column="39" selection-end-line="866" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="519" column="14" selection-start-line="519" selection-start-column="14" selection-end-line="519" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/provider/MediaStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="866" column="39" selection-start-line="866" selection-start-column="39" selection-end-line="866" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#43793#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4573#4574#0" expanded="false" />
-            <element signature="e#4842#4843#0" expanded="false" />
-            <element signature="e#4886#4887#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9258#9259#0" expanded="false" />
-            <element signature="e#9610#9611#0" expanded="false" />
-            <element signature="e#9647#9648#0" expanded="false" />
-            <element signature="e#9861#9862#0" expanded="false" />
-            <element signature="e#9898#9899#0" expanded="false" />
-            <element signature="e#10130#10131#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10801#10802#0" expanded="false" />
-            <element signature="e#10867#10868#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12314#12315#0" expanded="false" />
-            <element signature="e#13092#13093#0" expanded="false" />
-            <element signature="e#13129#13130#0" expanded="false" />
-            <element signature="e#13988#13989#0" expanded="false" />
-            <element signature="e#14038#14039#0" expanded="false" />
-            <element signature="e#17817#17818#0" expanded="false" />
-            <element signature="e#17844#17845#0" expanded="false" />
-            <element signature="e#18125#18126#0" expanded="false" />
-            <element signature="e#18178#18179#0" expanded="false" />
-            <element signature="e#18540#18541#0" expanded="false" />
-            <element signature="e#18615#18616#0" expanded="false" />
-            <element signature="e#21660#21661#0" expanded="false" />
-            <element signature="e#21708#21709#0" expanded="false" />
-            <element signature="e#23123#23124#0" expanded="false" />
-            <element signature="e#23177#23178#0" expanded="false" />
-            <element signature="e#24423#24424#0" expanded="false" />
-            <element signature="e#24473#24474#0" expanded="false" />
-            <element signature="e#25567#25568#0" expanded="false" />
-            <element signature="e#25617#25618#0" expanded="false" />
-            <element signature="e#26891#26892#0" expanded="false" />
-            <element signature="e#26928#26929#0" expanded="false" />
-            <element signature="e#28510#28511#0" expanded="false" />
-            <element signature="e#28557#28558#0" expanded="false" />
-            <element signature="e#29261#29262#0" expanded="false" />
-            <element signature="e#29314#29315#0" expanded="false" />
-            <element signature="e#32844#32845#0" expanded="false" />
-            <element signature="e#32880#32881#0" expanded="false" />
-            <element signature="e#39090#39091#0" expanded="false" />
-            <element signature="e#39117#39118#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.4.0/support-v4-23.4.0-sources.jar!/android/support/v4/app/Fragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33195877">
-          <caret line="956" column="16" selection-start-line="956" selection-start-column="16" selection-end-line="956" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/provider/MediaStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="866" column="39" selection-start-line="866" selection-start-column="39" selection-end-line="866" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.4.0/support-v4-23.4.0-sources.jar!/android/support/v4/app/FragmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61490685">
-          <caret line="167" column="39" selection-start-line="167" selection-start-column="39" selection-end-line="167" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0865979">
-          <caret line="55" column="41" selection-start-line="55" selection-start-column="41" selection-end-line="55" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -3154,30 +2408,123 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/Util.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/DataBase.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <caret line="306" column="43" selection-start-line="306" selection-start-column="34" selection-end-line="306" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Timeline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="27" selection-start-line="86" selection-start-column="27" selection-end-line="86" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/DataBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="306" column="43" selection-start-line="306" selection-start-column="34" selection-end-line="306" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Timeline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/DataBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="306" column="43" selection-start-line="306" selection-start-column="34" selection-end-line="306" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/DataBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="306" column="43" selection-start-line="306" selection-start-column="34" selection-end-line="306" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Checkin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.385567">
-          <caret line="487" column="32" selection-start-line="487" selection-start-column="32" selection-end-line="487" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="525" column="27" selection-start-line="525" selection-start-column="27" selection-end-line="525" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Timeline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="38" selection-start-line="116" selection-start-column="38" selection-end-line="116" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sync.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.4827585">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/br/com/plux/checkinfotografico/S3Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.827586">
+          <caret line="139" column="13" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/layout/Sync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73540854">
+          <caret line="309" column="33" selection-start-line="309" selection-start-column="33" selection-end-line="309" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
