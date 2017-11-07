@@ -339,6 +339,10 @@ public class Util {
             if (outChannel != null)
                 outChannel.close();
         }
+
+        //Seta a permissão
+        Runtime.getRuntime().exec("chmod -R 777 " + dst.getAbsolutePath());
+
         return true;
     }
 
@@ -374,6 +378,8 @@ public class Util {
         try {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

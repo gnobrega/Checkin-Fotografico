@@ -24,6 +24,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import br.com.plux.checkinfotografico.bean.LocationBean;
 import layout.Checkin;
 
 public class MainActivity extends AppCompatActivity
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         String fragmentClass = "";
         MainActivity.lastMenuSelected = getMenuIndex(id);
+        SharedPreferences sharedpreferences;
 
         //Identifica o menu selecionado
         switch (id) {
@@ -162,6 +164,36 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_sync:
                 fragmentClass = "layout.Sync";
                 break;
+            case R.id.nav_map:
+
+                //Verifica se foi selecionado o ponto
+                sharedpreferences = getSharedPreferences("location", Context.MODE_PRIVATE);
+                if( sharedpreferences == null || sharedpreferences.getInt("id", 0) == 0 ) {
+                    Toast.makeText(this, "Selecione um ponto", Toast.LENGTH_SHORT).show();
+                    fragmentClass = "layout.Location";
+                } else {
+                    Integer locationId = sharedpreferences.getInt("id", 0);
+                    if( locationId == 0 ) {
+                        Toast.makeText(this, "Ponto inválido", Toast.LENGTH_SHORT).show();
+                    } else {
+                        DataBase db = new DataBase(getApplicationContext());
+                        LocationBean locationBean = db.getLocation(locationId);
+                        String location = locationBean.getName();
+                        String latitude = locationBean.getLatitude();
+                        String longitude = locationBean.getLongitude();
+                        if( latitude.equals("") || longitude.equals("") ) {
+                            Util.toast(getApplicationContext(), "Coordenadas inválidas");
+                        } else {
+                            //Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude + "?label=" + Uri.encode(location));
+                            Uri gmmIntentUri = Uri.parse("geo:0?q=" + latitude + "," + longitude + "(" + Uri.encode(location) + ")");
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            startActivity(mapIntent);
+                        }
+                    }
+
+                }
+                break;
             case R.id.nav_logoff:
                 logoff();
                 toLoginActivity();
@@ -169,7 +201,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_checkin:
 
                 //Verifica se foi selecionado o ponto
-                SharedPreferences sharedpreferences = getSharedPreferences("location", Context.MODE_PRIVATE);
+                sharedpreferences = getSharedPreferences("location", Context.MODE_PRIVATE);
                 if( sharedpreferences == null || sharedpreferences.getInt("id", 0) == 0 ) {
                     Toast.makeText(this, "Selecione um ponto", Toast.LENGTH_SHORT).show();
                     fragmentClass = "layout.Location";

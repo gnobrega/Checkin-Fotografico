@@ -21,7 +21,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
     private static String DB_NAME = "checkin";
-    private static int VERSAO = 2;
+    private static int VERSAO = 3;
 
     //Table user
     public static String TABLE_USER = "user";
@@ -35,6 +35,8 @@ public class DataBase extends SQLiteOpenHelper {
     public static String TB_LOCATION_ID = "id";
     public static String TB_LOCATION_NAME = "name";
     public static String TB_LOCATION_ID_ROUTE = "id_route";
+    public static String TB_LOCATION_LATITUDE = "latitude";
+    public static String TB_LOCATION_LONGITUDE = "longitude";
 
     //Table campaign
     public static String TABLE_CAMPAIGN = "campaign";
@@ -110,7 +112,9 @@ public class DataBase extends SQLiteOpenHelper {
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_LOCATION + "("
                 + "'" + TB_LOCATION_ID + "'" + " integer primary key autoincrement,"
                 + "'" + TB_LOCATION_NAME + "'"  + " text,"
-                + "'" + TB_LOCATION_ID_ROUTE + "'"  + " int"
+                + "'" + TB_LOCATION_ID_ROUTE + "'"  + " int,"
+                + "'" + TB_LOCATION_LATITUDE + "'"  + " text,"
+                + "'" + TB_LOCATION_LONGITUDE + "'"  + " text"
                 +")";
         db.execSQL(sql);
     }
@@ -263,13 +267,15 @@ public class DataBase extends SQLiteOpenHelper {
     /**
      * Insere um novo ponto
      */
-    public Long insertLocation(int id, String name, int routeId){
+    public Long insertLocation(int id, String name, int routeId, String latitude, String longitude){
 
         db = this.getWritableDatabase();
         ContentValues location = new ContentValues();
         location.put(this.TB_LOCATION_ID, id);
         location.put(this.TB_LOCATION_NAME, name);
         location.put(this.TB_LOCATION_ID_ROUTE, routeId);
+        location.put(this.TB_LOCATION_LATITUDE, latitude);
+        location.put(this.TB_LOCATION_LONGITUDE, longitude);
         Long locationId = db.insert(this.TABLE_LOCATION, null, location);
         db.close();
 
@@ -368,6 +374,23 @@ public class DataBase extends SQLiteOpenHelper {
         }
     }
 
+    public LocationBean getLocation(Integer id) {
+        String[] campos =  {"*"};
+        String selection = this.TB_LOCATION_ID + " = "+ id;
+        if( db == null ) {
+            db = this.getWritableDatabase();
+        }
+
+        Cursor cursor = db.query(this.TABLE_LOCATION, campos, selection, null, null, null, null, null);
+        if( cursor.getCount() > 0 ) {
+            cursor.moveToNext();
+            LocationBean locationBean = toLocationBean(cursor);
+            return locationBean;
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Converte Cursor em UserBean
      */
@@ -391,10 +414,14 @@ public class DataBase extends SQLiteOpenHelper {
         int locationId = cursor.getInt(cursor.getColumnIndex("id"));
         String locationName = cursor.getString(cursor.getColumnIndex("name"));
         int locationIdRoute = cursor.getInt(cursor.getColumnIndex("id_route"));
+        String latitude = cursor.getString(cursor.getColumnIndex("latitude"));
+        String longitude = cursor.getString(cursor.getColumnIndex("longitude"));
         LocationBean locationBean = new LocationBean();
         locationBean.setId(locationId);
         locationBean.setName(locationName);
         locationBean.setId_route(locationIdRoute);
+        locationBean.setLatitude(latitude);
+        locationBean.setLongitude(longitude);
         return locationBean;
     }
 

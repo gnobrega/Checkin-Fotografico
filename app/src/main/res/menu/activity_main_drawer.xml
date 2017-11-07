@@ -16,17 +16,16 @@
             android:title="Checkin" />
     </group>
 
-    <item android:title="Sincronia">
+    <item android:title="Configurações">
         <menu>
             <item
                 android:id="@+id/nav_sync"
                 android:icon="@drawable/ic_sync_24dp"
                 android:title="Sincronizar" />
-        </menu>
-    </item>
-
-    <item android:title="Configurações">
-        <menu>
+            <item
+                android:id="@+id/nav_map"
+                android:icon="@mipmap/ic_point"
+                android:title="Mapa" />
             <item
                 android:id="@+id/nav_logoff"
                 android:icon="@drawable/ic_lock_open_24dp"

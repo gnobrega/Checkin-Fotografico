@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -432,6 +433,12 @@ public class Checkin extends Fragment {
         File dir = new File(pathPhotos);
         if( !dir.exists() ) {
             dir.mkdir();
+        }
+        //Dá as permissões
+        try {
+            Runtime.getRuntime().exec("chmod -R 777 " + pathPhotos);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         //Verifica se o aparelho possui a permissão da câmera

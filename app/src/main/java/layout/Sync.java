@@ -142,9 +142,11 @@ public class Sync extends Fragment {
                             int locationId = jLocation.getInt("id");
                             String locationName = jLocation.getString("name");
                             int locationIdRoute = jLocation.getInt("id_route");
+                            String locationLatitude = jLocation.getString("latitude");
+                            String locationLongitude = jLocation.getString("longitude");
 
                             //Insere no banco
-                            db.insertLocation(locationId, locationName, locationIdRoute);
+                            db.insertLocation(locationId, locationName, locationIdRoute, locationLatitude, locationLongitude);
                         }
                         sendMessage("\nSincronia de localizações - SUCESSO", handler);
 
