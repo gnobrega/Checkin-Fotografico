@@ -34,13 +34,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import br.com.plux.checkinfotografico.bean.UserBean;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via login/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -55,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mLoginView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -76,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 @Override
                 public void handleMessage(Message msg) {
-                    populeFieldEmail();
+                    populeFieldLogin();
                 }
             };
 
@@ -85,8 +90,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void run() {
 
+                    //Forma a url de consulta com a chave de segurança
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat df = new SimpleDateFormat("MM-dd");
+                    String formattedDate = df.format(c.getTime());
+                    String chave = "gestor-plux-" + formattedDate;
+                    String keyCript = "";
+                    try {
+                        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+                        byte[] result = digest.digest(chave.getBytes("UTF-8"));
+                        StringBuilder sb = new StringBuilder();
+                        for (byte b : result) {
+                            sb.append(String.format("%02X", b));
+                        }
+                        keyCript = sb.toString().toLowerCase();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
                     //Busca a lista de usuários no servidor
-                    String sResp = Connection.get(App.SERVER_GET_USERS);
+                    String urlGetUsers = App.SERVER_GET_USERS + "?chave=" + keyCript;
+                    String sResp = Connection.get(urlGetUsers);
 
                     try {
                         if( sResp != null ) {
@@ -100,13 +126,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             for( int i = 0; i < aUsers.length(); i ++ ) {
                                 JSONObject jUser = aUsers.getJSONObject(i);
                                 int userId = jUser.getInt("id");
-                                String userName = jUser.getString("name");
-                                String userEmail = jUser.getString("email");
-                                String userPass = jUser.getString("password");
-                                db.insertUser(userId, userName, userEmail, userPass);
+                                String userName = jUser.getString("nome");
+                                String userLogin = jUser.getString("login");
+                                String userPass = jUser.getString("senha");
+                                db.insertUser(userId, userName, userLogin, userPass);
                             }
 
-                            //Mantém a comunicação com o campo de email. Popula o campo
+                            //Mantém a comunicação com o campo de login. Popula o campo
                             Message message = new Message();
                             handler.sendMessage(message);
                         }
@@ -117,12 +143,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }).start();
         } else {
 
-            //Popula o campo de email
-            populeFieldEmail();
+            //Popula o campo de login
+            populeFieldLogin();
         }
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mLoginView = (AutoCompleteTextView) findViewById(R.id.login);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -135,8 +161,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mSignSignInButton = (Button) findViewById(R.id.login_sign_in_button);
+        mSignSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -166,26 +192,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                            @NonNull int[] grantResults) {
     }
 
-    //Popula o campo (autocomplete) email
-    public void populeFieldEmail() {
+    //Popula o campo (autocomplete) login
+    public void populeFieldLogin() {
         DataBase db = new DataBase(this.getApplicationContext());
         ArrayList<UserBean> lstUsers = db.loadUsers();
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mLoginView = (AutoCompleteTextView) findViewById(R.id.login);
         int length = lstUsers.size();
         if( length > 0 ) {
-            String[] lstEmails = new String[length];
+            String[] lstLogins = new String[length];
             for (int i = 0; i < lstUsers.size(); i++) {
                 UserBean userBean = lstUsers.get(i);
-                lstEmails[i] = userBean.getEmail();
+                lstLogins[i] = userBean.getLogin();
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lstEmails);
-            mEmailView.setAdapter(adapter);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lstLogins);
+            mLoginView.setAdapter(adapter);
         }
     }
 
     /**
      * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
+     * If there are form errors (invalid login, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
@@ -194,11 +220,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mLoginView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String login = mLoginView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -211,17 +237,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        // Check for a valid login address.
+        if (TextUtils.isEmpty(login)) {
+            mLoginView.setError(getString(R.string.error_field_required));
+            focusView = mLoginView;
             cancel = true;
         }
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -230,14 +251,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password, this);
+            mAuthTask = new UserLoginTask(login, password, this);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
@@ -300,14 +316,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
+        List<String> logins = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
+            logins.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
 
-        addEmailsToAutoComplete(emails);
+        addLoginsToAutoComplete(logins);
     }
 
     @Override
@@ -315,13 +331,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+    private void addLoginsToAutoComplete(List<String> loginCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+                        android.R.layout.simple_dropdown_item_1line, loginCollection);
 
-        mEmailView.setAdapter(adapter);
+        mLoginView.setAdapter(adapter);
     }
 
 
@@ -348,12 +364,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private Integer mId = null;
-        private final String mEmail;
+        private final String mLogin;
         private final String mPassword;
         private AppCompatActivity mLoginActivity;
 
-        UserLoginTask(String email, String password, AppCompatActivity loginActivity) {
-            mEmail = email;
+        UserLoginTask(String login, String password, AppCompatActivity loginActivity) {
+            mLogin = login;
             mPassword = password;
             mLoginActivity = loginActivity;
         }
@@ -362,9 +378,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
 
             //Verifica se a senha é válida
-            if(!TextUtils.isEmpty(mEmail) && !TextUtils.isEmpty(mPassword)) {
+            if(!TextUtils.isEmpty(mLogin) && !TextUtils.isEmpty(mPassword)) {
                 DataBase db = new DataBase(mLoginActivity.getApplicationContext());
-                UserBean userBean = db.getUserAuth(mEmail, mPassword);
+                UserBean userBean = db.getUserAuth(mLogin, mPassword);
                 if( userBean != null ) {
                     mId = userBean.getId();
 
@@ -373,7 +389,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     SharedPreferences.Editor editor = sharedpreferences.edit();
                     editor.putInt("id", userBean.getId());
                     editor.putString("name", userBean.getName());
-                    editor.putString("email", userBean.getEmail());
+                    editor.putString("login", userBean.getLogin());
                     editor.commit();
                 } else {
                     return false;
@@ -392,7 +408,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 toMainActivity();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_email_password));
+                mPasswordView.setError(getString(R.string.error_incorrect_login_password));
                 mPasswordView.requestFocus();
             }
         }

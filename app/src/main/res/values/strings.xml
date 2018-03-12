@@ -16,13 +16,14 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
+    <string name="prompt_login">Login</string>
     <string name="prompt_password">Senha</string>
     <string name="action_sign_in">Entrar</string>
     <string name="action_sign_in_short">Entrar</string>
     <string name="error_invalid_email">Esse email é inválido</string>
     <string name="error_invalid_password">Essa senha é muito curta</string>
     <string name="error_incorrect_password">Senha inválida</string>
-    <string name="error_incorrect_email_password">Email e/ou senha inválidos</string>
+    <string name="error_incorrect_login_password">Login e/ou senha inválidos</string>
     <string name="error_field_required">Esse campo é obrigatório</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."

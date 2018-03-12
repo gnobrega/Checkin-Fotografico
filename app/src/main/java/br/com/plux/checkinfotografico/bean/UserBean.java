@@ -6,6 +6,7 @@ package br.com.plux.checkinfotografico.bean;
 public class UserBean {
     private int id;
     private String name;
+    private String login;
     private String email;
     private String password;
 
@@ -27,6 +28,14 @@ public class UserBean {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public void setEmail(String email) {

@@ -121,7 +121,8 @@ public class Sync extends Fragment {
 
                 //Busca a lista de pontos no servidor
                 sendMessage("\nBaixando informações do servidor...", handler);
-                String sResp = Connection.get(App.SERVER_GET_ROUTE + "/" + userId + ".json?nocache=" + Math.random());
+                String urlSync = App.SERVER_GET_ROUTE + "/id_usuario/" + userId + ".json?nocache=" + Math.random();
+                String sResp = Connection.get(urlSync);
                 Util.log(App.SERVER_GET_ROUTE + "/" + userId + ".json?+nocache=" + Math.random());
                 if (sResp != null) {
 
@@ -141,6 +142,7 @@ public class Sync extends Fragment {
                             JSONObject jLocation = aLocations.getJSONObject(i);
                             int locationId = jLocation.getInt("id");
                             String locationName = jLocation.getString("name");
+                            //locationName = new String(locationName.getBytes("ISO-8859-1"));
                             int locationIdRoute = jLocation.getInt("id_route");
                             String locationLatitude = jLocation.getString("latitude");
                             String locationLongitude = jLocation.getString("longitude");
@@ -157,7 +159,7 @@ public class Sync extends Fragment {
                                 JSONObject jCampaign = aCampaigns.getJSONObject(i);
                                 Integer campaignId = jCampaign.getInt("id");
                                 if( campaignId != null ) {
-                                    String campaignName = jCampaign.getString("campanha");
+                                    String campaignName = jCampaign.getString("name");
 
                                     //Insere no banco
                                     db.insertCampaign(campaignId, campaignName);
@@ -185,7 +187,6 @@ public class Sync extends Fragment {
                         e.printStackTrace();
                         sendMessage("\nERRO - " + e.getMessage(), handler);
                     }
-
                 }
             }
         }).start();
@@ -238,7 +239,9 @@ public class Sync extends Fragment {
 
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat curFormater = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat curFormater2 = new SimpleDateFormat("yyyy/MM/dd");
                 String formattedDate = curFormater.format(c.getTime());
+                String formattedDateFolder = curFormater2.format(c.getTime());
 
                 //Recarrega as imagens do banco de dados
                 Checkin.loadPhotoDb(App.MAIN_ACTIVITY.getApplicationContext(), null);
@@ -273,7 +276,7 @@ public class Sync extends Fragment {
                         if( file.exists() ) {
                             fotoAtual ++;
                             sendMessage("\nEnviando " + fotoAtual + " de " + totalFotos, handler);
-                            String s3FileKey = "photos"  + "/location_" + locationId + "/" + formattedDate + "_user_" + user.getId() + "_"
+                            String s3FileKey = "photos-plux"  + "/location_" + locationId + "/" + formattedDateFolder + "/" + formattedDate + "_user_" + user.getId() + "_"
                                     + "station_" + imageItem.getKeyGrid() + "_" + file.getName();
 
                             //Executa o upload

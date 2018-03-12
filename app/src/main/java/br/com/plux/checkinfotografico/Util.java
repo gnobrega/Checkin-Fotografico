@@ -5,7 +5,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -94,8 +98,11 @@ public class Util {
     /**
      * Redimensiona uma imagem a partir do bitmap
      */
-    public static Bitmap resizeImage(Context context, Bitmap bmpOriginal, float newWidth, float newHeigth) {
-        Bitmap novoBmp = null;
+    public static Bitmap resizeImage(Context context, Bitmap bmpOriginal, int newWidth, int newHeight) {
+        Bitmap novoBmp = Bitmap.createScaledBitmap(bmpOriginal, newWidth, newHeight, true);
+        return novoBmp;
+
+        /*Bitmap novoBmp = null;
 
         int w = bmpOriginal.getWidth();
         int h = bmpOriginal.getHeight();
@@ -111,7 +118,7 @@ public class Util {
         matrix.postScale(scalaW, scalaH);
 
         novoBmp = Bitmap.createBitmap(bmpOriginal, 0, 0, w, h, matrix, true);
-        return novoBmp;
+        return novoBmp;*/
     }
 
     /**
@@ -119,7 +126,7 @@ public class Util {
      */
     public static Bitmap resizeImage(Context context, Bitmap bmpOriginal, float newWidth) {
         int newHeigth = ((int) newWidth * bmpOriginal.getHeight() / bmpOriginal.getWidth());
-        bmpOriginal = resizeImage(context, bmpOriginal, newWidth, newHeigth);
+        bmpOriginal = resizeImage(context, bmpOriginal, (int)newWidth, newHeigth);
 
         return bmpOriginal;
     }
@@ -132,7 +139,11 @@ public class Util {
         //Comprime a imagem
         OutputStream imagefile = null;
         Bitmap bitmap = getBitmapFile(src);
-        bitmap = resizeImage(context, bitmap, 400);
+        //bitmap = resizeImage(context, bitmap, 400);
+        bitmap = resizeImage(context, bitmap, 1200, 900);
+
+        //Aumenta o brilho
+        bitmap = changeBitmapContrastBrightness(bitmap, 1.2f, 1.2f);
 
         //Padroniza posição horizontal
         if( bitmap.getWidth() < bitmap.getHeight() ) {
@@ -382,5 +393,26 @@ public class Util {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Edita o contraste e o brilho da imagem
+     */
+    public static Bitmap changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness)
+    {
+        ColorMatrix cm = new ColorMatrix(new float[] {
+            contrast, 0, 0, 0, brightness,
+            0, contrast, 0, 0, brightness,
+            0, 0, contrast, 0, brightness,
+            0, 0, 0, 1, 0
+        });
+
+        Bitmap ret = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
+        Canvas canvas = new Canvas(ret);
+        Paint paint = new Paint();
+        paint.setColorFilter(new ColorMatrixColorFilter(cm));
+        canvas.drawBitmap(bmp, 0, 0, paint);
+
+        return ret;
     }
 }

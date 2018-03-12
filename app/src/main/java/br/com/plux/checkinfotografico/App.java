@@ -9,13 +9,13 @@ import android.os.Environment;
  * Created by gustavonobrega on 01/06/2016.
  */
 public class App {
-    public static String SERVER_HOST = "https://corporativo.3midia.com.br/";
+    public static String SERVER_HOST = "http://gestor.plux.com.br/";
     public static String SERVER_API_HOST = App.SERVER_HOST + "api/";
-    public static String SERVER_GET_USERS = App.SERVER_API_HOST + "get-users-checkin.json";
-    public static String SERVER_GET_ROUTE = App.SERVER_API_HOST + "get-route";
+    public static String SERVER_GET_USERS = App.SERVER_HOST + "app/carregar-usuarios";
+    public static String SERVER_GET_ROUTE = App.SERVER_HOST + "app/sincronizar";
     public static Activity MAIN_ACTIVITY = null;
     public static Context context = null;
-    public static Integer THUMB_WIDTH = 100;
+    public static Integer THUMB_WIDTH = 700;
     public static Integer GRID_COLS_PORTRAIT = 3;
     public static Integer GRID_COLS_LANDSCAPE = 5;
 

@@ -27,7 +27,7 @@ public class DataBase extends SQLiteOpenHelper {
     public static String TABLE_USER = "user";
     public static String TB_USER_ID = "id";
     public static String TB_USER_NAME = "name";
-    public static String TB_USER_EMAIL = "email";
+    public static String TB_USER_LOGIN = "login";
     public static String TB_USER_PASS = "password";
 
     //Table location
@@ -99,7 +99,7 @@ public class DataBase extends SQLiteOpenHelper {
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_USER + "("
                 + "'" + TB_USER_ID + "'" + " integer primary key autoincrement,"
                 + "'" + TB_USER_NAME + "'"  + "text,"
-                + "'" + TB_USER_EMAIL + "'"  + "text,"
+                + "'" + TB_USER_LOGIN + "'"  + "text,"
                 + "'" + TB_USER_PASS + "'"  + "text"
                 +")";
         db.execSQL(sql);
@@ -245,13 +245,13 @@ public class DataBase extends SQLiteOpenHelper {
     /**
      * Insere um novo usuário
      */
-    public Long insertUser(int id, String name, String email, String password){
+    public Long insertUser(int id, String name, String login, String password){
 
         db = this.getWritableDatabase();
         ContentValues user = new ContentValues();
         user.put(this.TB_USER_ID, id);
         user.put(this.TB_USER_NAME, name);
-        user.put(this.TB_USER_EMAIL, email);
+        user.put(this.TB_USER_LOGIN, login);
         user.put(this.TB_USER_PASS, password);
         Long userId = db.insert(this.TABLE_USER, null, user);
         db.close();
@@ -352,16 +352,16 @@ public class DataBase extends SQLiteOpenHelper {
             return photoId;
         }
     }
-    public UserBean getUserAuth(String email, String pass) {
+    public UserBean getUserAuth(String login, String pass) {
         String passHash = Util.sha1(Util.md5(pass));
         String[] campos =  {"*"};
-        String selection = this.TB_USER_EMAIL + " = '"+ email +
+        String selection = this.TB_USER_LOGIN + " = '"+ login +
                             "' AND " + this.TB_USER_PASS + " = '" + passHash + "'";
         if( db == null ) {
             db = this.getWritableDatabase();
         }
         String sql = "SELECT * FROM TABLE " + TABLE_USER +
-                     " WHERE " + this.TB_USER_EMAIL + " = '" + email + "'" +
+                     " WHERE " + this.TB_USER_LOGIN + " = '" + login + "'" +
                      " AND " + this.TB_USER_PASS + " = '" + passHash + "'";
 
         Cursor cursor = db.query(this.TABLE_USER, campos, selection, null, null, null, null, null);
@@ -397,12 +397,12 @@ public class DataBase extends SQLiteOpenHelper {
     public UserBean toUserBean(Cursor cursor) {
         int userId = cursor.getInt(cursor.getColumnIndex("id"));
         String userName = cursor.getString(cursor.getColumnIndex("name"));
-        String userEmail = cursor.getString(cursor.getColumnIndex("email"));
+        String userLogin = cursor.getString(cursor.getColumnIndex("login"));
         String userPass = cursor.getString(cursor.getColumnIndex("password"));
         UserBean userBean = new UserBean();
         userBean.setId(userId);
         userBean.setName(userName);
-        userBean.setEmail(userEmail);
+        userBean.setLogin(userLogin);
         userBean.setPassword(userPass);
         return userBean;
     }
